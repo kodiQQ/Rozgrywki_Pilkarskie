@@ -43,7 +43,7 @@ class Player(models.Model):
     position = models.TextField(max_length=20)
 
     def __str__(self):
-        return str(self.name, self.surname)
+        return str(self.name+" "+ self.surname)
 
 
 
