@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="admin container">
+    <div>
+        <a href="{% url 'team_management' %}"> Zarządzanie drużynami </a>
+    </div>
+    <div>
+        <a href="{% url 'player_management' %}"> Zarządzanie piłkarzami </a>
+    </div>
+    <div>
+        <a href="{% url 'match_management' %}"> Zarządzanie drużynami </a>
+    </div>
+
+
+
+
+</div>
+
+
+{% endblock content %}

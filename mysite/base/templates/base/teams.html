@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="Teams container">
+    {% for team in teams %}
+        <div>
+            <a> {{ team.name }}</a>
+        </div>
+    {% endfor %}
+
+
+
+</div>
+
+
+{% endblock content %}

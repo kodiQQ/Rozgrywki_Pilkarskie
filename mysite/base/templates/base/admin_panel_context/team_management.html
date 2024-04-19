@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    <a href="{% url 'team_create' %}"> Utwórz nowy zespół </a>
+</div>
+
+<div>
+    {% for team in teams %}
+    <div>
+
+
+        <p> <a href="{% url 'team_delete' team.id %}">Usuń </a> <a href="{% url 'team_edit' team.id %}">Edytuj </a> {{team.name}}</p>
+
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}
