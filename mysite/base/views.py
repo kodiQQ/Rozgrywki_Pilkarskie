@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team
-from .forms import TeamForm
+from .models import Team, Player
+from .forms import TeamForm, PlayerForm
 # Create your views here.
 
 def loginPage(request):
@@ -48,10 +48,12 @@ def teams(request):
 def admin_panel(request):
     return render(request,'base/admin_panel.html')
 
+
+#TEAM
 def team_management(request):
     teams = Team.objects.all()
     context = {'teams': teams}
-    return render(request,'base/admin_panel_context/team_management.html',context)
+    return render(request,'base/admin_panel_context/Team/team_management.html',context)
 
 def team_create(request):
     form=TeamForm()
@@ -61,7 +63,7 @@ def team_create(request):
         form=TeamForm(request.POST)
         if form.is_valid():
             form.save()
-    return render(request, 'base/admin_panel_context/team_form.html',context)
+    return render(request, 'base/admin_panel_context/Team/team_form.html',context)
 
 def team_edit(request,pk):
     team = Team.objects.get(id=pk)
@@ -72,7 +74,7 @@ def team_edit(request,pk):
         if form.is_valid():
             form.save()
             return redirect('team_management')
-    return render(request, 'base/admin_panel_context/team_form.html', context)
+    return render(request, 'base/admin_panel_context/Team/team_form.html', context)
 
 def team_delete(request,pk):
     team=Team.objects.get(id=pk)
@@ -80,12 +82,50 @@ def team_delete(request,pk):
         team.delete()
         return redirect('team_management')
     context={'obj':team}
-    return render(request, 'base/admin_panel_context/team_delete.html',context)
+    return render(request, 'base/admin_panel_context/Team/team_delete.html',context)
 
+#PLAYER
+def player_create(request):
+    form=PlayerForm()
+    context={'form': form}
+    #bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!
+    if request.method =='POST':
+        form=PlayerForm(request.POST)
+        if form.is_valid():
+            form.save()
+    return render(request, 'base/admin_panel_context/Player/player_form.html',context)
 
+def player_edit(request,pk):
+    player = Player.objects.get(id=pk)
+    form = PlayerForm(instance=player)
+    context = {'form': form}
+    if request.method == 'POST':
+        form= PlayerForm(request.POST, instance=player)
+        if form.is_valid():
+            form.save()
+            return redirect('player_management')
+    return render(request, 'base/admin_panel_context/Player/player_form.html', context)
+
+def player_delete(request,pk):
+    player=Player.objects.get(id=pk)
+    if request.method == 'POST':
+        player.delete()
+        return redirect('player_management')
+    context={'obj':player}
+    return render(request, 'base/admin_panel_context/Player/player_delete.html',context)
+
+def team_delete(request,pk):
+    team=Team.objects.get(id=pk)
+    if request.method == 'POST':
+        team.delete()
+        return redirect('team_management')
+    context={'obj':team}
+    return render(request, 'base/admin_panel_context/Team/team_delete.html',context)
 
 def player_management(request):
-    return render(request,'base/admin_panel_context/player_management.html')
+    players = Player.objects.all()
+    context = {'players': players}
+    return render(request,'base/admin_panel_context/Player/player_management.html',context)
 
 def match_management(request):
     return render(request,'base/admin_panel_context/match_management.html')
