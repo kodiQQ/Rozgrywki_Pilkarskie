@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -45,16 +46,19 @@ def teams(request):
     context={'teams':teams}
     return render(request,'base/teams.html',context)
 
+@login_required(login_url='/login')
 def admin_panel(request):
     return render(request,'base/admin_panel.html')
 
 
 #TEAM
+@login_required(login_url='/login')
 def team_management(request):
     teams = Team.objects.all()
     context = {'teams': teams}
     return render(request,'base/admin_panel_context/Team/team_management.html',context)
 
+@login_required(login_url='/login')
 def team_create(request):
     form=TeamForm()
     context={'form': form}
@@ -65,6 +69,7 @@ def team_create(request):
             form.save()
     return render(request, 'base/admin_panel_context/Team/team_form.html',context)
 
+@login_required(login_url='/login')
 def team_edit(request,pk):
     team = Team.objects.get(id=pk)
     form = TeamForm(instance=team)
@@ -76,6 +81,7 @@ def team_edit(request,pk):
             return redirect('team_management')
     return render(request, 'base/admin_panel_context/Team/team_form.html', context)
 
+@login_required(login_url='/login')
 def team_delete(request,pk):
     team=Team.objects.get(id=pk)
     if request.method == 'POST':
@@ -85,6 +91,7 @@ def team_delete(request,pk):
     return render(request, 'base/admin_panel_context/Team/team_delete.html',context)
 
 #PLAYER
+@login_required(login_url='/login')
 def player_create(request):
     form=PlayerForm()
     context={'form': form}
@@ -95,6 +102,7 @@ def player_create(request):
             form.save()
     return render(request, 'base/admin_panel_context/Player/player_form.html',context)
 
+@login_required(login_url='/login')
 def player_edit(request,pk):
     player = Player.objects.get(id=pk)
     form = PlayerForm(instance=player)
@@ -106,6 +114,7 @@ def player_edit(request,pk):
             return redirect('player_management')
     return render(request, 'base/admin_panel_context/Player/player_form.html', context)
 
+@login_required(login_url='/login')
 def player_delete(request,pk):
     player=Player.objects.get(id=pk)
     if request.method == 'POST':
@@ -114,6 +123,7 @@ def player_delete(request,pk):
     context={'obj':player}
     return render(request, 'base/admin_panel_context/Player/player_delete.html',context)
 
+@login_required(login_url='/login')
 def team_delete(request,pk):
     team=Team.objects.get(id=pk)
     if request.method == 'POST':
@@ -122,10 +132,12 @@ def team_delete(request,pk):
     context={'obj':team}
     return render(request, 'base/admin_panel_context/Team/team_delete.html',context)
 
+@login_required(login_url='/login')
 def player_management(request):
     players = Player.objects.all()
     context = {'players': players}
     return render(request,'base/admin_panel_context/Player/player_management.html',context)
 
+@login_required(login_url='/login')
 def match_management(request):
     return render(request,'base/admin_panel_context/match_management.html')

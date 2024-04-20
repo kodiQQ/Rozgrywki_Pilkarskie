@@ -27,7 +27,7 @@ class Season_Table(models.Model):
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
     statistics= models.ForeignKey(Statistics, on_delete=models.CASCADE)
     class Meta:
-        ordering = ['statistics__points']
+        ordering = ['-statistics__points']
     def __str__(self):
         return self.name
 class Participation(models.Model):
