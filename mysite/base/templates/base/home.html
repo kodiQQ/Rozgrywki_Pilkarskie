@@ -14,17 +14,27 @@
     <div>
         <h3>Szukaj rozgrywek</h3>
         <hr>
+
+        <div>
+            <a href="{% url 'home'%}">Wszystkie mecze</a>
+        </div>
+
+        {% for league in leagues %}
+        <div>
+            <a href="{% url 'home' %}?q={{league.name}}">{{league}}</a>
+        </div>
+        {% endfor %}
+
     </div>
 
     <div>
         <a href="{% url 'statistics' %}"> Statystyki drużyn </a>
-    </div>
-    <div>
         {% for match in matches %}
         <div>
         {{match.team1 }} vs {{match.team2}}</p>
         </div>
         {% endfor %}
+
     </div>
 
 </div>

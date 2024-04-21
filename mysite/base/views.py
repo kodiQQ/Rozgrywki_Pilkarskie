@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team, Player, Statistics, Match
-from .forms import TeamForm, PlayerForm, MatchForm
+from .models import Team, Player, Statistics, Match, League
+from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 # Create your views here.
 
@@ -40,8 +40,10 @@ def logoutUser(request):
 
 
 def home(request):
-    matches = Match.objects.all()
-    context = {'matches': matches}
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    matches = Match.objects.filter(league__name__icontains  =q)
+    leagues = League.objects.all()
+    context = {'matches': matches, 'leagues': leagues}
     return render(request,'base/home.html',context)
 
 def statistics(request):
@@ -188,3 +190,43 @@ def match_delete(request,pk):
         return redirect('match_management')
     context={'obj':match}
     return render(request, 'base/admin_panel_context/Match/match_delete.html',context)
+
+#LEAGUE
+
+@login_required(login_url='/login')
+def league_management(request):
+    leagues = League.objects.all()
+    context = {'leagues': leagues}
+    return render(request,'base/admin_panel_context/League/league_management.html',context)
+
+@login_required(login_url='/login')
+def league_create(request):
+    form=LeagueForm()
+    context={'form': form}
+    #bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!
+    if request.method =='POST':
+        form=LeagueForm(request.POST)
+        if form.is_valid():
+            form.save()
+    return render(request, 'base/admin_panel_context/League/league_form.html',context)
+
+@login_required(login_url='/login')
+def league_edit(request,pk):
+    league = League.objects.get(id=pk)
+    form = LeagueForm(instance=match)
+    context = {'form': form}
+    if request.method == 'POST':
+        form= LeagueForm(request.POST, instance=league)
+        if form.is_valid():
+            form.save()
+            return redirect('league_management')
+    return render(request, 'base/admin_panel_context/League/league_form.html',context)
+
+@login_required(login_url='/login')
+def league_delete(request,pk):
+    league = League.objects.get(id=pk)
+    if request.method == 'POST':
+        league.delete()
+        return redirect('league_management')
+    context={'obj':league}
+    return render(request, 'base/admin_panel_context/Match/league_delete.html',context)
