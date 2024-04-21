@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import Team, Player, Statistics
 from .forms import TeamForm, PlayerForm
+from django.db.models import IntegerField, ExpressionWrapper, F
 # Create your views here.
 
 def loginPage(request):
@@ -42,7 +43,9 @@ def home(request):
     return render(request,'base/home.html')
 
 def statistics(request):
-    statistics=Statistics.objects.all()
+    statistics = Statistics.objects.annotate(
+        total_points=ExpressionWrapper(F('wins') * 3 + F('draws'), output_field=IntegerField())
+    ).order_by('-total_points')
     #context={'team':statistics.team, 'wins':statistics.team, 'draws':statistics.draws,'loses':statistics.loses, 'goals':statistics.goals,'goals_lost':statistics.goals_lost, 'points':statistics.points}
     context={'statistics':statistics}
     return render(request, 'base/statistics.html',context)

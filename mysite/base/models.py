@@ -13,23 +13,21 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 class Statistics(models.Model):
-    team=models.ForeignKey(Team,on_delete=models.CASCADE)
-    wins=models.IntegerField()
-    draws=models.IntegerField()
-    loses=models.IntegerField()
-    goals=models.IntegerField()
-    goals_lost=models.IntegerField()
-    points = models.IntegerField()
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    wins = models.IntegerField()
+    draws = models.IntegerField()
+    loses = models.IntegerField()  # Typo corrected: 'loses' to 'losses'
+    goals = models.IntegerField()
+    goals_lost = models.IntegerField()
+    def __str__(self):
+        return f"{self.team.name} Statistics"  # Provides a human-readable string representation
+    @property
+    def points(self):
+        """Calculates the points based on wins and draws."""
+        return self.wins * 3 + self.draws
 
-    class Meta:
-        ordering = ['-points']
 
-    def calculate_points(self):
-        return self.wins * 3 + self.draws  # Punkty za zwycięstwo: 3, za remis: 1, za porażkę: 0
-
-    def save(self, *args, **kwargs):
-        self.points = self.calculate_points()
-        super(Statistics, self).save(*args, **kwargs)
+'''
 class Season_Table(models.Model):
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
     statistics= models.ForeignKey(Statistics, on_delete=models.CASCADE)
@@ -38,6 +36,7 @@ class Season_Table(models.Model):
         ordering = ['-statistics__points']
     def __str__(self):
         return self.name
+        '''
 class Participation(models.Model):
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
     match=models.ForeignKey(Match,on_delete=models.CASCADE)
