@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import Team, Player, Statistics
-from .forms import TeamForm, PlayerForm
+from .forms import TeamForm, PlayerForm, MatchForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 # Create your views here.
 
@@ -149,4 +149,38 @@ def player_management(request):
 
 @login_required(login_url='/login')
 def match_management(request):
-    return render(request,'base/admin_panel_context/match_management.html')
+    return render(request,'base/admin_panel_context/Match/match_management.html')
+
+#MATCH
+
+@login_required(login_url='/login')
+def match_create(request):
+    form=MatchForm()
+    context={'form': form}
+    #bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!
+    if request.method =='POST':
+        form=MatchForm(request.POST)
+        if form.is_valid():
+            form.save()
+    return render(request, 'base/admin_panel_context/Match/match_form.html',context)
+
+@login_required(login_url='/login')
+def match_edit(request,pk):
+    match = Match.objects.get(id=pk)
+    form = MatchForm(instance=match)
+    context = {'form': form}
+    if request.method == 'POST':
+        form= MatchForm(request.POST, instance=match)
+        if form.is_valid():
+            form.save()
+            return redirect('match_management')
+    return render(request, 'base/admin_panel_context/Match/match_form.html',context)
+
+@login_required(login_url='/login')
+def match_delete(request,pk):
+    match=Match.objects.get(id=pk)
+    if request.method == 'POST':
+        match.delete()
+        return redirect('match_management')
+    context={'obj':match}
+    return render(request, 'base/admin_panel_context/Match/match_delete.html',context)

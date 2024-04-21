@@ -9,10 +9,10 @@ def admin_panel(request):
     return render(request,'base/admin_panel.html')
 
 def team_management(request):
-    return render(request,'base/admin_panel_context/team_management.html')
+    return render(request,'base/admin_panel_context/Team/team_management.html')
 
 def player_management(request):
-    return render(request,'base/admin_panel_context/player_management.html')
+    return render(request,'base/admin_panel_context/Player/player_management.html')
 
 def match_management(request):
     return render(request,'base/admin_panel_context/match_management.html')

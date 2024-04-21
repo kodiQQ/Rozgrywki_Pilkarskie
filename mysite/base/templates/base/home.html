@@ -2,8 +2,23 @@
 
 {% block content %}
 
-<div class="Home container">
-<a href="{% url 'statistics' %}"> Statystyki drużyn </a>
+<style>
+    .home-container{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    }
+</style>
+
+<div class="home-container">
+
+    <div>
+        <h3>Szukaj rozgrywek</h3>
+        <hr>
+    </div>
+
+    <div>
+        <a href="{% url 'statistics' %}"> Statystyki drużyn </a>
+    </div>
 
 </div>
 
