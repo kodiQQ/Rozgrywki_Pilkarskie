@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team, Player, Statistics
+from .models import Team, Player, Statistics, Match
 from .forms import TeamForm, PlayerForm, MatchForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 # Create your views here.
@@ -40,7 +40,9 @@ def logoutUser(request):
 
 
 def home(request):
-    return render(request,'base/home.html')
+    matches = Match.objects.all()
+    context = {'matches': matches}
+    return render(request,'base/home.html',context)
 
 def statistics(request):
     statistics = Statistics.objects.annotate(
@@ -149,7 +151,9 @@ def player_management(request):
 
 @login_required(login_url='/login')
 def match_management(request):
-    return render(request,'base/admin_panel_context/Match/match_management.html')
+    matches = Match.objects.all()
+    context = {'matches': matches}
+    return render(request,'base/admin_panel_context/Match/match_management.html',context)
 
 #MATCH
 

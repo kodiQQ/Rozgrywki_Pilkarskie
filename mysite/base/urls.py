@@ -17,7 +17,7 @@ urlpatterns = [
     path('admin_panel/player_management/player_delete/<int:pk>',views.player_delete,name="player_delete"),
     path('admin_panel/player_management/player_edit/<int:pk>',views.player_edit,name="player_edit"),
     path('admin_panel/match_management/', views.match_management, name="match_management"),
-    path('admin_panel/match_management/match_create/<int:pk>', views.match_create, name="match_create"),
+    path('admin_panel/match_management/match_create/', views.match_create, name="match_create"),
     path('admin_panel/match_management/match_delete/<int:pk>', views.match_delete, name="match_delete"),
     path('admin_panel/match_management/match_edit/<int:pk>', views.match_edit, name="match_edit"),
 
