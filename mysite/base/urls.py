@@ -16,6 +16,7 @@ urlpatterns = [
     path('admin_panel/player_management/player_create',views.player_create,name="player_create"),
     path('admin_panel/player_management/player_delete/<int:pk>',views.player_delete,name="player_delete"),
     path('admin_panel/player_management/player_edit/<int:pk>',views.player_edit,name="player_edit"),
+    path('statistics/', views.statistics,name='statistics'),
 
     path('admin_panel/match_management/',views.match_management,name="match_management"),
     #path('admin_panel/team_management/add_team',views.team_management,name="team_add"),

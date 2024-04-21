@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team, Player
+from .models import Team, Player, Statistics
 from .forms import TeamForm, PlayerForm
 # Create your views here.
 
@@ -40,6 +40,12 @@ def logoutUser(request):
 
 def home(request):
     return render(request,'base/home.html')
+
+def statistics(request):
+    statistics=Statistics.objects.all()
+    #context={'team':statistics.team, 'wins':statistics.team, 'draws':statistics.draws,'loses':statistics.loses, 'goals':statistics.goals,'goals_lost':statistics.goals_lost, 'points':statistics.points}
+    context={'statistics':statistics}
+    return render(request, 'base/statistics.html',context)
 
 def teams(request):
     teams=Team.objects.all()

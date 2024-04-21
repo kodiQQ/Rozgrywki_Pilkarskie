@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kolumny HTML</title>
+<style>
+    /* Stylizacja kolumn */
+    .kolumna {
+        float: left; /* Ustawienie kolumn obok siebie */
+        width: 14%; /* Szerokość kolumny */
+        padding: 10px; /* Dodanie odstępu wokół zawartości kolumny */
+        box-sizing: border-box; /* Uwzględnienie paddingu w całkowitej szerokości */
+        border: 1px solid #ddd; /* Dodanie obramowania dla kolumn */
+    }
+    /* Wyczyść float po kolumnach */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+    /* Stylizacja wierszy */
+    .kolumna p {
+        border-bottom: 1px solid #ddd; /* Dodanie poziomej linii na dole każdego wiersza */
+        margin: 0; /* Usunięcie domyślnych marginesów paragrafów */
+        padding: 5px 0; /* Dodanie odstępu na górze i na dole paragrafów */
+    }
+</style>
+
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="Statistics container">
+
+    <div>
+        <h1> Tabela Wyników</h1>
+    </div>
+    <div class="kolumna">
+    <h2>Drużyna</h2>
+        {% for stat in statistics %}
+        <p> {{stat.team}}</p>
+        {% endfor %}
+    </div>
+
+        <div class="kolumna">
+    <h2>Wygrane</h2>
+        {% for stat in statistics %}
+            <p>{{stat.wins}} </p>
+        {% endfor %}
+    </div>
+
+            <div class="kolumna">
+    <h2>Remisy</h2>
+        {% for stat in statistics %}
+            <p>{{stat.draws}} </p>
+        {% endfor %}
+    </div>
+
+            <div class="kolumna">
+    <h2>Przegrane</h2>
+        {% for stat in statistics %}
+            <p>{{stat.loses}} </p>
+        {% endfor %}
+    </div>
+
+            <div class="kolumna">
+    <h2>Gole zdobyte</h2>
+        {% for stat in statistics %}
+            <p>{{stat.goals}} </p>
+        {% endfor %}
+    </div>
+
+            <div class="kolumna">
+    <h2>Gole stracone</h2>
+        {% for stat in statistics %}
+            <p>{{stat.goals_lost}} </p>
+        {% endfor %}
+    </div>
+
+            <div class="kolumna">
+    <h2>Punkty</h2>
+        {% for stat in statistics %}
+            <p>{{stat.points}} </p>
+        {% endfor %}
+    </div>
+
+
+
+
+</div>
+
+
+{% endblock content %}
