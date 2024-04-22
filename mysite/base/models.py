@@ -13,13 +13,19 @@ class Team(models.Model):
         return self.name
 
 
+class League(models.Model):
+    name = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
 
 class Match(models.Model):
     team1 = models.ForeignKey(Team, related_name='team1_matches', on_delete=models.SET_NULL, null=True)
     team2 = models.ForeignKey(Team, related_name='team2_matches', on_delete=models.SET_NULL, null=True)
     referee = models.CharField(max_length=50)
     stadium = models.CharField(max_length=50)
+    league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
 
     # Dodajemy ograniczenie UniqueConstraint, aby para (team1, team2) była unikalna
     class Meta:
@@ -31,6 +37,11 @@ class Match(models.Model):
         # Sprawdzamy, czy team1 i team2 są takie same
         if self.team1 == self.team2:
             raise ValidationError("Team1 and Team2 cannot be the same.")
+
+class season_table(models.Model):
+
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
 
 class Statistics(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)

@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    <a href="{% url 'league_create' %}"> Dodaj ligę </a>
+</div>
+
+<div>
+    {% for league in leagues %}
+    <div>
+
+        <p> <a href="{% url 'league_delete' league.id %}">Usuń </a> <a href="{% url 'league_edit' league.id %}">Edytuj </a> {{league.name}}</p>
+
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}
