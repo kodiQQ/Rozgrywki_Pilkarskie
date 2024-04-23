@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -41,9 +42,14 @@ def logoutUser(request):
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
-    matches = Match.objects.filter(league__name__icontains  =q)
+    matches = Match.objects.filter(
+        Q(league__name__icontains=q) |
+        Q(team1__name__icontains=q) |
+        Q(team2__name__icontains=q)
+    )
     leagues = League.objects.all()
-    context = {'matches': matches, 'leagues': leagues}
+    match_count = matches.count()
+    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count}
     return render(request,'base/home.html',context)
 
 def statistics(request):
@@ -213,7 +219,7 @@ def league_create(request):
 @login_required(login_url='/login')
 def league_edit(request,pk):
     league = League.objects.get(id=pk)
-    form = LeagueForm(instance=match)
+    form = LeagueForm(instance=league)
     context = {'form': form}
     if request.method == 'POST':
         form= LeagueForm(request.POST, instance=league)
@@ -229,4 +235,4 @@ def league_delete(request,pk):
         league.delete()
         return redirect('league_management')
     context={'obj':league}
-    return render(request, 'base/admin_panel_context/Match/league_delete.html',context)
+    return render(request, 'base/admin_panel_context/League/league_delete.html',context)
