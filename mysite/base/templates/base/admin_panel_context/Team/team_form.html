@@ -5,7 +5,7 @@
     <form method="POST" action="">
         {% csrf_token %}
         {{form.as_p}}
-        <input type="submit" value="Zatwierdź" />
+        <input type="submit" value="Zatwierdź" class="btn btn-success" />
     </form>
 </div>
 {% endblock content %}

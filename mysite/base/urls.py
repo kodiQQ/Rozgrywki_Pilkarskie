@@ -7,6 +7,7 @@ urlpatterns = [
     path('logout/', views.logoutUser, name="logout"),
     path('', views.home, name="home"),
     path('teams/', views.teams, name="teams"),
+    path('team/<int:pk>',)
     path('admin_panel/',views.admin_panel,name="admin_panel"),
     path('admin_panel/team_management/',views.team_management,name="team_management"),
     path('admin_panel/team_management/team_create/',views.team_create,name="team_create"),
@@ -26,7 +27,7 @@ urlpatterns = [
     path('admin_panel/league_management/league_delete/<int:pk>', views.league_delete, name="league_delete"),
     path('admin_panel/league_management/league_edit/<int:pk>', views.league_edit, name="league_edit"),
 
-    path('statistics/', views.statistics,name='statistics'),
+    path('statistics/<int:pk>', views.statistics,name='statistics'),
 
     path('admin_panel/match_management/',views.match_management,name="match_management"),
     #path('admin_panel/team_management/add_team',views.team_management,name="team_add"),

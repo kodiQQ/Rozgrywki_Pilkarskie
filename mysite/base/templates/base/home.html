@@ -5,8 +5,12 @@
 <style>
     .home-container{
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 2fr 1fr 3fr 1.5fr;
     }
+
+}
+
+
 </style>
 
 <div class="home-container">
@@ -14,27 +18,55 @@
     <div>
         <h3>Szukaj rozgrywek</h3>
         <hr>
-
-        <div>
-            <a href="{% url 'home'%}">Wszystkie mecze</a>
-        </div>
+        <table class="table table-bordered table-dark">
+        <tr>
+            <td>
+                <a href="{% url 'home'%}">Wszystkie mecze</a>
+            </td>
+        </tr>
 
         {% for league in leagues %}
-        <div>
-            <a href="{% url 'home' %}?q={{league.name}}">{{league}}</a>
-        </div>
+        <tr>
+            <td>
+                <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="transition: color 0.3s ease;">{{league}}</a>
+            <a href="{% url 'statistics' league.id %}"> Statystyki drużyn </a>
+            </td>
+        </tr>
+
         {% endfor %}
+            </table>
+
 
     </div>
 
     <div>
-        <h5>{{match_count}} nadchodzących meczy</h5>
-        <a href="{% url 'statistics' %}"> Statystyki drużyn </a>
+
+    </div>
+    <div>
+        <table class="table table-bordered table-dark">
+            <tr>
+                <td>
+                    <h5>{{match_count}} nadchodzących meczy</h5>
+                </td>
+            </tr>
+
+
+
         {% for match in matches %}
-        <div>
-        {{match.team1 }} vs {{match.team2}}</p>
-        </div>
+
+            <tr>
+                <td>
+                    {{match.team1 }} vs {{match.team2}}</p>
+                </td>
+            </tr>
+
         {% endfor %}
+
+            </table>
+
+    </div>
+
+    <div>
 
     </div>
 

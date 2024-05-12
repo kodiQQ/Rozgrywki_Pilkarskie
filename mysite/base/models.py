@@ -6,11 +6,7 @@ from django.core.exceptions import ValidationError
 
 
 
-class Team(models.Model):
-    name=models.CharField(max_length=50)
-    city=models.CharField(max_length=50)
-    def __str__(self):
-        return self.name
+
 
 
 class League(models.Model):
@@ -20,12 +16,21 @@ class League(models.Model):
     def __str__(self):
         return self.name
 
+class Team(models.Model):
+    league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
+    name=models.CharField(max_length=50)
+    city=models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
+
 class Match(models.Model):
     team1 = models.ForeignKey(Team, related_name='team1_matches', on_delete=models.SET_NULL, null=True)
     team2 = models.ForeignKey(Team, related_name='team2_matches', on_delete=models.SET_NULL, null=True)
     referee = models.CharField(max_length=50)
     stadium = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
+
+
 
     # Dodajemy ograniczenie UniqueConstraint, aby para (team1, team2) była unikalna
     class Meta:
@@ -38,7 +43,9 @@ class Match(models.Model):
         if self.team1 == self.team2:
             raise ValidationError("Team1 and Team2 cannot be the same.")
 
-class season_table(models.Model):
+
+
+class Season_table(models.Model):
 
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
@@ -73,6 +80,7 @@ class Participation(models.Model):
     match=models.ForeignKey(Match,on_delete=models.CASCADE)
 
 class Player(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
     name = models.TextField(max_length=20)
     surname = models.TextField(max_length=20)
     age = models.IntegerField()
@@ -86,13 +94,14 @@ class Player(models.Model):
 
 
 
-
+'''
 class Contract(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def __str__(self):
         return "Piłkarz: "+str(self.player)+" "+"Drużyna: "+str(self.team)
+        '''
 
 class Squad(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)

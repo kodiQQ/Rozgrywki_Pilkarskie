@@ -36,54 +36,72 @@
     <div>
         <h1> Tabela Wyników</h1>
     </div>
-    <div class="kolumna">
-    <h2>Drużyna</h2>
-        {% for stat in statistics %}
-        <p> {{stat.team}}</p>
-        {% endfor %}
-    </div>
+    <table class="table table-bordered table-warning">
+        <tr>
+            <td>
+                <h2>Drużyna</h2>
+            </td>
 
-        <div class="kolumna">
-    <h2>Wygrane</h2>
-        {% for stat in statistics %}
-            <p>{{stat.wins}} </p>
-        {% endfor %}
-    </div>
+            <td>
+                <h2>Wygrane</h2>
+            </td>
 
-            <div class="kolumna">
-    <h2>Remisy</h2>
-        {% for stat in statistics %}
-            <p>{{stat.draws}} </p>
-        {% endfor %}
-    </div>
+            <td>
+                <h2>Remisy</h2>
+            </td>
 
-            <div class="kolumna">
-    <h2>Przegrane</h2>
-        {% for stat in statistics %}
-            <p>{{stat.loses}} </p>
-        {% endfor %}
-    </div>
+            <td>
+                <h2>Przegrane</h2>
+            </td>
 
-            <div class="kolumna">
-    <h2>Gole zdobyte</h2>
-        {% for stat in statistics %}
-            <p>{{stat.goals}} </p>
-        {% endfor %}
-    </div>
+            <td>
+                <h2>Gole zdobyte</h2>
+            </td>
 
-            <div class="kolumna">
-    <h2>Gole stracone</h2>
-        {% for stat in statistics %}
-            <p>{{stat.goals_lost}} </p>
-        {% endfor %}
-    </div>
+            <td>
+                <h2>Gole stracone</h2>
+            </td>
 
-            <div class="kolumna">
-    <h2>Punkty</h2>
+            <td>
+                <h2>Punkty</h2>
+            </td>
+        </tr>
         {% for stat in statistics %}
-            <p>{{stat.points}} </p>
-        {% endfor %}
-    </div>
+        <tr>
+
+            <td>
+                <p> {{stat.team}}</p>
+            </td>
+
+            <td>
+                <p>{{stat.wins}} </p>
+            </td>
+
+            <td>
+                <p>{{stat.draws}} </p>
+            </td>
+
+            <td>
+                <p>{{stat.loses}} </p>
+            </td>
+
+            <td>
+                <p>{{stat.goals}} </p>
+            </td>
+
+            <td>
+                <p>{{stat.goals_lost}} </p>
+            </td>
+
+            <td>
+                <p>{{stat.points}} </p>
+            </td>
+
+        </tr>
+        {% endfor%}
+    </table>
+
+
 
 
 

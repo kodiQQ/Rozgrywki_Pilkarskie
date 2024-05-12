@@ -3,15 +3,17 @@
 {% block content %}
 
 <div>
-    <a href="{% url 'player_create' %}"> Dodaj piłkarza </a>
+    <a href="{% url 'player_create' %}" class="btn btn-success"> Dodaj piłkarza </a>
 </div>
-
+<div>
+    <p></p>
+</div>
 <div>
     {% for player in players %}
     <div>
 
 
-        <p> <a href="{% url 'player_delete' player.id %}">Usuń </a> <a href="{% url 'player_edit' player.id %}">Edytuj </a> {{player.name }}  {{player.surname}}</p>
+        <p> <a href="{% url 'player_delete' player.id %}" class="btn btn-danger" >Usuń </a> <a href="{% url 'player_edit' player.id %}" class="btn btn-primary">Edytuj </a> {{player.name }}  {{player.surname}}</p>
 
     </div>
     {% endfor %}

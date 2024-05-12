@@ -3,14 +3,16 @@
 {% block content %}
 
 <div>
-    <a href="{% url 'league_create' %}"> Dodaj ligę </a>
+    <a href="{% url 'league_create' %}" class="btn btn-success"> Dodaj ligę </a>
 </div>
-
+<div>
+    <p></p>
+</div>
 <div>
     {% for league in leagues %}
     <div>
 
-        <p> <a href="{% url 'league_delete' league.id %}">Usuń </a> <a href="{% url 'league_edit' league.id %}">Edytuj </a> {{league.name}}</p>
+        <p> <a href="{% url 'league_delete' league.id %}" class="btn btn-danger">Usuń </a> <a href="{% url 'league_edit' league.id %}" class="btn btn-primary">Edytuj </a> {{league.name}}</p>
 
     </div>
     {% endfor %}

@@ -3,18 +3,32 @@
 {% block content %}
 
 <div class="admin container">
-    <div>
-        <a href="{% url 'team_management' %}"> Zarządzanie drużynami </a>
-    </div>
-    <div>
-        <a href="{% url 'player_management' %}"> Zarządzanie piłkarzami </a>
-    </div>
-    <div>
-        <a href="{% url 'match_management' %}"> Zarządzanie meczami </a>
-    </div>
-    <div>
-        <a href="{% url 'league_management' %}"> Zarządzanie ligami </a>
-    </div>
+    <table class="table table-bordered table-warning">
+    <tr>
+        <td>
+            <a href="{% url 'team_management' %}" > Zarządzanie drużynami </a>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="{% url 'player_management' %}"> Zarządzanie piłkarzami </a>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="{% url 'match_management' %}"> Zarządzanie meczami </a>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="{% url 'league_management' %}"> Zarządzanie ligami </a>
+        </td>
+
+    </tr>
+    </table>
 
 </div>
 

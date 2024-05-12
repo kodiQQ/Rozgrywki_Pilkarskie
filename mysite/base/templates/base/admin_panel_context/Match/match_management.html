@@ -3,14 +3,16 @@
 {% block content %}
 
 <div>
-    <a href="{% url 'match_create' %}"> Dodaj mecz </a>
+    <a href="{% url 'match_create' %}" class="btn btn-success"> Dodaj mecz </a>
 </div>
-
+<div>
+    <p></p>
+</div>
 <div>
     {% for match in matches %}
     <div>
 
-        <p> <a href="{% url 'match_delete' match.id %}">Usuń </a> <a href="{% url 'match_edit' match.id %}">Edytuj </a> {{match.team1 }} vs {{match.team2}}</p>
+        <p> <a href="{% url 'match_delete' match.id %}" class="btn btn-danger">Usuń </a> <a href="{% url 'match_edit' match.id %}" class="btn btn-primary">Edytuj </a> {{match.team1 }} vs {{match.team2}}</p>
 
     </div>
     {% endfor %}

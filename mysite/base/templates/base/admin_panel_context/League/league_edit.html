@@ -5,6 +5,6 @@
     {% csrf_token %}
     <p> Czy jesteś pewny że chcesz edytować ligę: "{{obj}}" ?</p>
     <a href="{{request.META.HTTP_REFERER}}"> Wróć</a>
-    <input type="submit" value="Potwierdź"/>
+    <input type="submit" value="Potwierdź" class="btn btn-success"/>
 </form>
 {% endblock content %}

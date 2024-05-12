@@ -8,10 +8,22 @@
 
 
 {% if request.user.is_authenticated %}
-<a href=" {% url 'logout' %} ">Wyloguj się</a>
-<a href=" {% url 'admin_panel' %} ">Panel administratora</a>
+
+    <a href=" {% url 'logout' %} " class="btn btn-secondary">Wyloguj się</a>
+
+
+
+<a href=" {% url 'admin_panel' %} " class="btn btn-warning">Panel administratora</a>
+
 {% else %}
-<a href=" {% url 'login' %} ">Zaloguj się</a>
+
+
+<a href=" {% url 'login' %} " class="btn btn-primary">Zaloguj się</a>
+
+
+
+
+
 {% endif %}
 
 

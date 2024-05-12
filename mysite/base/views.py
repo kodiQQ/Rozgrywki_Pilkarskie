@@ -52,10 +52,46 @@ def home(request):
     context = {'matches': matches, 'leagues': leagues, 'match_count': match_count}
     return render(request,'base/home.html',context)
 
-def statistics(request):
+def statistics(request,pk):
+    league_obj = League.objects.get(pk=pk)
+    league_id1 = league_obj.id
+    teams=Team.objects.filter(league_id=league_id1)
+    statistics0 = Statistics.objects.filter(team__in=teams)
+
+    #sortuje względem punktów
+    statistics = statistics0.annotate(
+        total_points=ExpressionWrapper(F('wins') * 3 + F('draws'), output_field=IntegerField())
+    ).order_by('-total_points')
+
+    '''
+    league_obj = League.objects.get(pk=pk)
+    league_id = league_obj.id
+    teams_all=Season_table
+    print(league_obj)
+    teams = Season_table.objects.filter(league=league_obj).values_list('team', flat=True)
+    for t in teams:
+        print("druzyna: "+str(t))
+
+
+    statistics_all=Statistics.objects.all()
+    for s in statistics_all:
+        print("statistics_all:")
+        print(s)
+        print(s.team.id)
+    statistics0 = Statistics.objects.filter(team__in=teams)
+
+    print("statistics0")
+    print(statistics0)
+    statistics = statistics0.annotate(
+        total_points=ExpressionWrapper(F('wins') * 3 + F('draws'), output_field=IntegerField())
+    ).order_by('-total_points')
+    '''
+    '''
     statistics = Statistics.objects.annotate(
         total_points=ExpressionWrapper(F('wins') * 3 + F('draws'), output_field=IntegerField())
     ).order_by('-total_points')
+    '''
+
     #context={'team':statistics.team, 'wins':statistics.team, 'draws':statistics.draws,'loses':statistics.loses, 'goals':statistics.goals,'goals_lost':statistics.goals_lost, 'points':statistics.points}
     context={'statistics':statistics}
     return render(request, 'base/statistics.html',context)
@@ -236,3 +272,12 @@ def league_delete(request,pk):
         return redirect('league_management')
     context={'obj':league}
     return render(request, 'base/admin_panel_context/League/league_delete.html',context)
+
+
+def team(request,pk):
+    team=Team.objects.filter(id=pk)
+    statystics=Statistics.objects.get(team_id=pk)
+    players=Player.objects.filter(team_id=pk)
+    context={'team':team,'statystics':statystics,'players':players}
+
+    return render(request,'base/team.html',context)
