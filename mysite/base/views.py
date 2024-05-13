@@ -276,8 +276,13 @@ def league_delete(request,pk):
 
 def team(request,pk):
     team=Team.objects.filter(id=pk)
-    statystics=Statistics.objects.get(team_id=pk)
+    statistics=Statistics.objects.get(team_id=pk)
     players=Player.objects.filter(team_id=pk)
-    context={'team':team,'statystics':statystics,'players':players}
+    context={'team':team,'statistics':statistics,'players':players}
 
     return render(request,'base/team.html',context)
+
+def player(request,pk):
+    player=Player.objects.get(id=pk)
+    context = {'player': player}
+    return render(request, 'base/player.html', context)

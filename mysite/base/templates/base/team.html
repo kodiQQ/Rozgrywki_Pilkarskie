@@ -1,6 +1,101 @@
 {% extends 'main.html' %}
 
 {% block content %}
+<h1>{{statistics.team.name}}</h1>
+<p></p>
+<h1>Statystyki:</h1>
+<div>
+    <table class="table table-bordered table-dark">
+    <tr>
+        <td>
+            Drużyna:
+        </td>
+        <td>
+            {{statistics.team.name}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Liga:
+        </td>
+        <td>
+            {{statistics.team.league}}
+        </td>
+    </tr>
+
+        <tr>
+        <td>
+            Wygrane:
+        </td>
+        <td>
+            {{statistics.wins}}
+        </td>
+    </tr>
+
+            <tr>
+        <td>
+            Remisy:
+        </td>
+        <td>
+            {{statistics.draws}}
+        </td>
+    </tr>
+
+            <tr>
+        <td>
+            Przegrane:
+        </td>
+        <td>
+            {{statistics.loses}}
+        </td>
+    </tr>
+
+             <tr>
+        <td>
+            Gole zdobyte:
+        </td>
+        <td>
+            {{statistics.goals}}
+        </td>
+    </tr>
+
+             <tr>
+        <td>
+            Gole Stracone
+        </td>
+        <td>
+            {{statistics.goals_lost}}
+        </td>
+    </tr>
+        </table>
+
+</div>
+<h1>Piłkarze:</h1>
+<div>
+    <table class="table table-bordered table-dark">
+        <tr>
+        <td>
+            Imię i Nazwisko
+        </td>
+
+                <td>
+            Wiek
+        </td>
+    </tr>
+    {% for p in players %}
+    <tr>
+        <td>
+          <a href="{% url 'player' p.id %}">{{p.name}} {{p.surname}}</a>
+        </td>
+
+                <td>
+            {{p.age}}
+        </td>
+    </tr>
+    {% endfor %}
+        </table>
+</div>
+
 
 
 {% endblock content %}

@@ -30,6 +30,10 @@ class Match(models.Model):
     stadium = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return str(self.team1.name+" vs "+self.team2.name)
+
+
 
 
     # Dodajemy ograniczenie UniqueConstraint, aby para (team1, team2) była unikalna
@@ -79,14 +83,19 @@ class Participation(models.Model):
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
     match=models.ForeignKey(Match,on_delete=models.CASCADE)
 
+class Position(models.Model):
+    position=models.CharField(max_length=20)
+    def __str__(self):
+        return self.position
 class Player(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     name = models.TextField(max_length=20)
+    position=models.ForeignKey(Position, on_delete=models.CASCADE)
     surname = models.TextField(max_length=20)
     age = models.IntegerField()
     nationality = models.TextField(max_length=20)
     number = models.IntegerField()
-    position = models.TextField(max_length=20)
+    #position = models.TextField(max_length=20)
 
     def __str__(self):
         return str(self.name+" "+ self.surname)
@@ -112,3 +121,32 @@ class Scorer_Table(models.Model):
 
     def __str__(self):
         return str(self.player)+" "+"Goals: "+str(self.goal)
+
+def validate_positive(value):
+    if value < 0:
+        raise ValidationError('Wartość musi być większa lub równa zero.')
+
+
+
+
+class Type_of_Card(models.Model):
+    type=models.CharField(max_length=20)
+    def __str__(self):
+        return self.type
+class Penalty(models.Model):
+    card=models.ForeignKey(Type_of_Card,on_delete=models.CASCADE)
+    player=models.ForeignKey(Player,on_delete=models.SET_NULL,null=True)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.card.type+" CARD,   "+self.player.name+" "+self.player.surname+" ,  "+self.match.team1.name+" vs "+ self.match.team2.name)
+
+class Match_Event(models.Model):
+    match=models.ForeignKey(Match,on_delete=models.CASCADE)
+    #goal=models.IntegerField(validators=[validate_positive])
+    goal = models.IntegerField()
+    penalty=models.ManyToManyField(Penalty,through='MatchPenalty')
+class MatchPenalty(models.Model):
+    match_event = models.ForeignKey(Match_Event, on_delete=models.CASCADE)
+    penalty = models.ForeignKey(Penalty, on_delete=models.CASCADE)
+

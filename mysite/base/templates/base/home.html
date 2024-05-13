@@ -56,7 +56,7 @@
 
             <tr>
                 <td>
-                    {{match.team1 }} vs {{match.team2}}</p>
+                    <a href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
                 </td>
             </tr>
 

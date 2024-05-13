@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('teams/', views.teams, name="teams"),
     path('team/<int:pk>',views.team, name='team'),
+    path('player/<int:pk>',views.player, name='player'),
     path('admin_panel/',views.admin_panel,name="admin_panel"),
     path('admin_panel/team_management/',views.team_management,name="team_management"),
     path('admin_panel/team_management/team_create/',views.team_create,name="team_create"),
