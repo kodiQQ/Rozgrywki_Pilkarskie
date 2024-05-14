@@ -23,6 +23,11 @@ urlpatterns = [
     path('admin_panel/match_management/match_delete/<int:pk>', views.match_delete, name="match_delete"),
     path('admin_panel/match_management/match_edit/<int:pk>', views.match_edit, name="match_edit"),
 
+    path('admin_panel/match_management/match_event_management/<int:pk>', views.match_event_management, name="match_event_management"),
+    path('admin_panel/match_management/match_event_management/create/<int:pk>', views.match_event_create, name="match_event_create"),
+    path('admin_panel/match_management/match_event_management/delete/<int:pk>', views.match_event_delete, name="match_event_delete"),
+    path('admin_panel/match_management/match_event_management/edit/<int:pk>', views.match_event_edit, name="match_event_edit"),
+
     path('admin_panel/league_management/', views.league_management, name="league_management"),
     path('admin_panel/league_management/league_create/', views.league_create, name="league_create"),
     path('admin_panel/league_management/league_delete/<int:pk>', views.league_delete, name="league_delete"),

@@ -133,7 +133,7 @@ class Type_of_Card(models.Model):
     type=models.CharField(max_length=20)
     def __str__(self):
         return self.type
-class Penalty(models.Model):
+class Match_Penalty(models.Model):
     card=models.ForeignKey(Type_of_Card,on_delete=models.CASCADE)
     player=models.ForeignKey(Player,on_delete=models.SET_NULL,null=True)
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
@@ -141,12 +141,36 @@ class Penalty(models.Model):
     def __str__(self):
         return str(self.card.type+" CARD,   "+self.player.name+" "+self.player.surname+" ,  "+self.match.team1.name+" vs "+ self.match.team2.name)
 
-class Match_Event(models.Model):
+'''
+class Match_Penalty(models.Model):
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    penalty = models.ForeignKey(Penalty, on_delete=models.CASCADE)
+    '''
+
+'''
+class Match_Events(models.Model):
     match=models.ForeignKey(Match,on_delete=models.CASCADE)
     #goal=models.IntegerField(validators=[validate_positive])
     goal = models.IntegerField()
     penalty=models.ManyToManyField(Penalty,through='MatchPenalty')
+    
 class MatchPenalty(models.Model):
     match_event = models.ForeignKey(Match_Event, on_delete=models.CASCADE)
     penalty = models.ForeignKey(Penalty, on_delete=models.CASCADE)
+    '''
+
+
+'''
+class Goal(models.Model):
+    player=models.ForeignKey(Player,on_delete=models.CASCADE)
+    time=models.IntegerField()
+    '''
+
+class Match_Goal(models.Model):
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    player=models.ForeignKey(Player,on_delete=models.CASCADE)
+    time=models.IntegerField()
+
+    def __str__(self):
+        return f"Goal by {self.player} at {self.time} minute(s)"
 

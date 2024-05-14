@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<style>
+    .goals-and-penaltys-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+</style>
+
+<h1>{{match.team1.name}} vs {{match.team2.name}}</h1>
+<a href="{% url 'match_event_management' match.id %}?q=add_goal">Add goal</a>
+{% if check == "add_goal" %}
+        <form method="POST" action="" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <input href="{% url 'match_event_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
+    </form>
+{% endif %}
+
+<a href="{% url 'match_event_management' match.id %}?q=add_penalty">Add penalty</a>
+{% if check == "add_penalty" %}
+
+    <form method="POST" action="" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <input  type="submit" value="Zatwierdź" class="btn btn-success" />
+    </form>
+
+{% endif %}
+<p> </p>
+<p> </p>
+<div class="goals-and-penaltys-container">
+    <div>
+        <table class="table table-bordered table-dark">
+    <tr>
+        <td>
+            Zawodnik
+        </td>
+        <td>
+            Kartka
+        </td>
+    </tr>
+    {% for mp in match_penalties %}
+    <tr>
+        <td>
+            {{mp.player}}
+        </td>
+        <td>
+            {{mp.card.type}}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+    </div>
+
+    <div>
+        <table class="table table-bordered table-dark">
+    <tr>
+        <td>
+            Strzelec gola
+        </td>
+        <td>
+            minuta
+        </td>
+    </tr>
+    {% for mg in match_goals %}
+    <tr>
+        <td>
+            {{mg.player}}
+        </td>
+        <td>
+            {{mg.time}}
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+    </div>
+
+</div>
+
+
+{% endblock content %}
