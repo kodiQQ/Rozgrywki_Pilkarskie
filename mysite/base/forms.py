@@ -57,6 +57,7 @@ class SquadForm(ModelForm):
         model = Squad
         fields = ['player']
 
+    #funkcja ograniczająca wybór piłkarzy do piłkarzy tylko z danego zespołu ( nie do wszystkich z bazy danych)
     def __init__(self, *args, **kwargs):
         team = kwargs.pop('team', None)
         super(SquadForm, self).__init__(*args, **kwargs)
