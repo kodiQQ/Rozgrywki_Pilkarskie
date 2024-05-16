@@ -5,12 +5,12 @@
 <style>
     .goals-and-penaltys-container{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 8fr 1fr 8fr;
     }
 </style>
 
 <h1>{{match.team1.name}} vs {{match.team2.name}}</h1>
-<a href="{% url 'match_event_management' match.id %}?q=add_goal">Add goal</a>
+<a href="{% url 'match_event_management' match.id %}?q=add_goal" class="btn btn-success">Dodaj gola</a>
 {% if check == "add_goal" %}
         <form method="POST" action="" >
         {% csrf_token %}
@@ -19,7 +19,7 @@
     </form>
 {% endif %}
 
-<a href="{% url 'match_event_management' match.id %}?q=add_penalty">Add penalty</a>
+<a href="{% url 'match_event_management' match.id %}?q=add_penalty" class="btn btn-danger">Dodaj przewinienie</a>
 {% if check == "add_penalty" %}
 
     <form method="POST" action="" >
@@ -55,6 +55,9 @@
 </table>
     </div>
 
+    <div>
+
+    </div>
     <div>
         <table class="table table-bordered table-dark">
     <tr>
