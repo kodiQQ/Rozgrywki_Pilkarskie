@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team, Player, Statistics, Match, League, Match_Penalty,Match_Goal
-from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm
+from .models import Team, Player, Statistics, Match, League, Match_Penalty,Match_Goal,Squad
+from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm,SquadForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 # Create your views here.
 
@@ -277,11 +277,20 @@ def league_delete(request,pk):
 def match_event_management(request,pk):
 
     match=Match.objects.get(id=pk)
-    match_penalties=Match_Penalty.objects.filter(match_id=pk)
-    match_goals=Match_Goal.objects.filter(match_id=pk)
+
+
+    team1=match.team1
+    team2 = match.team2
+    match_goals_team1=Match_Goal.objects.filter(match_id=pk,team=team1)
+    match_goals_team2 = Match_Goal.objects.filter(match_id=pk, team=team2)
+    match_penalties_team1=Match_Penalty.objects.filter(match_id=pk,team=team1)
+    match_penalties_team2 = Match_Penalty.objects.filter(match_id=pk,team=team2)
 
     check = request.GET.get('q') if request.GET.get('q') != None else ''
+    check2 = request.GET.get('r') if request.GET.get('r') != None else ''
     form=""
+    print(check)
+    print(check2)
     if(check=="add_goal"):
 
         form = MatchGoalForm()
@@ -290,8 +299,12 @@ def match_event_management(request,pk):
         if request.method == 'POST':
             form = MatchGoalForm(request.POST)
             if form.is_valid():
+                if check2=="team1":
+                    team=team1
+                else:
+                    team = team2
                 #przypisuje automatycznie mecz bez ingerencji użytkownika
-                new_goal = Match_Goal(match=match, player=form.cleaned_data['player'], time=form.cleaned_data['time'])
+                new_goal = Match_Goal(match=match, player=form.cleaned_data['player'], time=form.cleaned_data['time'],team=team)
                 new_goal.save()
                 return redirect('match_event_management', pk=pk)
 
@@ -304,20 +317,71 @@ def match_event_management(request,pk):
         if request.method == 'POST':
             form = MatchPenaltyForm(request.POST)
             if form.is_valid():
+                if check2=="team1":
+                    team=team1
+                else:
+                    team = team2
                 # przypisuje automatycznie mecz bez ingerencji użytkownika
-                new_penalty=Match_Penalty(match=match,player=form.cleaned_data['player'],card=form.cleaned_data['card'])
+                new_penalty=Match_Penalty(match=match,player=form.cleaned_data['player'],card=form.cleaned_data['card'],team=team)
                 new_penalty.save()
                 return redirect('match_event_management', pk=pk)
 
-    context={'check':check,'match':match,'form':form,'match_goals':match_goals,'match_penalties':match_penalties}
+    context={'check':check,'match':match,'form':form,'match_goals_team1':match_goals_team1,'match_goals_team2':match_goals_team2,'match_penalties_team1':match_penalties_team1,'match_penalties_team2':match_penalties_team2}
 
     return render(request,'base/admin_panel_context/Match_Event/match_event_management.html',context)
-def match_event_create(request,pk):
-    return render(request, 'base/admin_panel_context/Match_Event/match_event_form.html')
-def match_event_delete(request,pk):
-    return render(request, 'base/admin_panel_context/Match_Event/match_event_delete.html')
-def match_event_edit(request,pk):
-    return render(request, 'base/admin_panel_context/Match_Event/match_event_form.html')
+
+def squad_management(request,pk):
+    match = Match.objects.get(id=pk)
+    team1 = match.team1
+    team2 = match.team2
+
+    squad_team1 = Squad.objects.filter(match_id=pk, team=team1)
+    squad_team2 = Squad.objects.filter(match_id=pk, team=team2)
+
+
+    check = request.GET.get('q') if request.GET.get('q') != None else ''
+    check2 = request.GET.get('r') if request.GET.get('r') != None else ''
+    form = ""
+
+    if (check == "add_player"):
+
+        form = SquadForm()
+        # context = {'form': form}
+        # bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!
+        if request.method == 'POST':
+            form = SquadForm(request.POST)
+            if form.is_valid():
+                if check2 == "team1":
+                    team = team1
+                else:
+                    team = team2
+                # przypisuje automatycznie mecz bez ingerencji użytkownika
+                new_squad = SquadForm(match=match, player=form.cleaned_data['player'],
+                                      team=team)
+                new_squad.save()
+                return redirect('squad_management', pk=pk)
+
+    if (check == "delete_player"):
+
+        form = SquadForm()
+        # context = {'form': form}
+        # bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!
+        if request.method == 'POST':
+            form = SquadForm(request.POST)
+            if form.is_valid():
+                if check2 == "team1":
+                    team = team1
+                else:
+                    team = team2
+                # przypisuje automatycznie mecz bez ingerencji użytkownika
+                new_penalty = SquadForm(match=match, player=form.cleaned_data['player'],
+                                            card=form.cleaned_data['card'], team=team)
+                new_penalty.save()
+                return redirect('match_event_management', pk=pk)
+
+    context = {'check': check, 'match': match, 'form': form, 'squad_team1':squad_team1,'squad_team2':squad_team2}
+
+    return render(request, 'base/admin_panel_context/Squad/squad_management.html', context)
 
 
 def team(request,pk):

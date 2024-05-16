@@ -9,8 +9,24 @@
     }
 </style>
 
-<h1>{{match.team1.name}} vs {{match.team2.name}}</h1>
-<a href="{% url 'match_event_management' match.id %}?q=add_goal" class="btn btn-success">Dodaj gola</a>
+<style>
+    .edit-container{
+        display: grid;
+        grid-template-columns: 8fr 1fr 8fr;
+    }
+    .title{
+
+    padding-bottom: 20px;
+
+    }
+</style>
+
+<h1 class="title">{{match.team1.name}} vs {{match.team2.name}}</h1>
+<div class="edit-container">
+
+<div>
+    <h2>{{match.team1.name}}</h2>
+    <a href="{% url 'match_event_management' match.id %}?q=add_goal&r=team1" class="btn btn-success">Dodaj gola</a>
 {% if check == "add_goal" %}
         <form method="POST" action="" >
         {% csrf_token %}
@@ -19,7 +35,7 @@
     </form>
 {% endif %}
 
-<a href="{% url 'match_event_management' match.id %}?q=add_penalty" class="btn btn-danger">Dodaj przewinienie</a>
+<a href="{% url 'match_event_management' match.id %}?q=add_penalty&r=team1" class="btn btn-danger">Dodaj przewinienie</a>
 {% if check == "add_penalty" %}
 
     <form method="POST" action="" >
@@ -29,10 +45,40 @@
     </form>
 
 {% endif %}
+</div>
+
+    <div></div>
+<div>
+    <h2>{{match.team2.name}}</h2>
+    <a href="{% url 'match_event_management' match.id %}?q=add_goal&r=team2" class="btn btn-success">Dodaj gola</a>
+{% if check == "add_goal" %}
+        <form method="POST" action="" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <input href="{% url 'match_event_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
+    </form>
+{% endif %}
+
+<a href="{% url 'match_event_management' match.id %}?q=add_penalty&r=team2" class="btn btn-danger">Dodaj przewinienie</a>
+{% if check == "add_penalty" %}
+
+    <form method="POST" action="" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <input  type="submit" value="Zatwierdź" class="btn btn-success" />
+    </form>
+
+{% endif %}
+</div>
+
+</div>
+
 <p> </p>
 <p> </p>
 <div class="goals-and-penaltys-container">
+
     <div>
+
         <table class="table table-bordered table-dark">
     <tr>
         <td>
@@ -42,7 +88,7 @@
             Kartka
         </td>
     </tr>
-    {% for mp in match_penalties %}
+    {% for mp in match_penalties_team1 %}
     <tr>
         <td>
             {{mp.player}}
@@ -58,6 +104,61 @@
     <div>
 
     </div>
+
+    <div>
+
+        <table class="table table-bordered table-dark">
+    <tr>
+        <td>
+            Zawodnik
+        </td>
+        <td>
+            Kartka
+        </td>
+    </tr>
+    {% for mp in match_penalties_team2 %}
+    <tr>
+        <td>
+            {{mp.player}}
+        </td>
+        <td>
+            {{mp.card.type}}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+    </div>
+
+</div>
+
+
+<div class="goals-and-penaltys-container">
+    <div>
+       <table class="table table-bordered table-dark">
+    <tr>
+        <td>
+            Strzelec gola
+        </td>
+        <td>
+            minuta
+        </td>
+    </tr>
+    {% for mg in match_goals_team1 %}
+    <tr>
+        <td>
+            {{mg.player}}
+        </td>
+        <td>
+            {{mg.time}}
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+    </div>
+
+    <div>
+
+    </div>
     <div>
         <table class="table table-bordered table-dark">
     <tr>
@@ -68,7 +169,7 @@
             minuta
         </td>
     </tr>
-    {% for mg in match_goals %}
+    {% for mg in match_goals_team2 %}
     <tr>
         <td>
             {{mg.player}}

@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Team, Player, Match, League,Match_Goal,Match_Penalty
+from .models import Team, Player, Match, League,Match_Goal,Match_Penalty,Squad
 
 class TeamForm(ModelForm):
     class Meta:
@@ -26,10 +26,16 @@ class MatchGoalForm(ModelForm):
     class Meta:
         model = Match_Goal
         fields= '__all__'
-        exclude = ['match']
+        exclude=['match','team']
 
 class MatchPenaltyForm(ModelForm):
     class Meta:
         model = Match_Penalty
         fields= '__all__'
-        exclude=['match']
+        exclude=['match','team']
+
+class SquadForm(ModelForm):
+    class Meta:
+        model = Squad
+        fields= '__all__'
+        #exclude = ['match', 'team']

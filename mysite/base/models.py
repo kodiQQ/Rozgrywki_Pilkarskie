@@ -115,6 +115,7 @@ class Contract(models.Model):
 class Squad(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    match=models.ForeignKey(Match,on_delete=models.CASCADE,default=1)
 class Scorer_Table(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     goal = models.IntegerField()
@@ -136,7 +137,8 @@ class Type_of_Card(models.Model):
 class Match_Penalty(models.Model):
     card=models.ForeignKey(Type_of_Card,on_delete=models.CASCADE)
     player=models.ForeignKey(Player,on_delete=models.SET_NULL,null=True)
-    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE,default=1)
+    team=models.ForeignKey(Team,on_delete=models.CASCADE,default=1)
 
     def __str__(self):
         return str(self.card.type+" CARD,   "+self.player.name+" "+self.player.surname+" ,  "+self.match.team1.name+" vs "+ self.match.team2.name)
@@ -167,9 +169,10 @@ class Goal(models.Model):
     '''
 
 class Match_Goal(models.Model):
-    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE,default=1)
     player=models.ForeignKey(Player,on_delete=models.CASCADE)
     time=models.IntegerField()
+    team = models.ForeignKey(Team, on_delete=models.CASCADE,default=1)
 
     def __str__(self):
         return f"Goal by {self.player} at {self.time} minute(s)"
