@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Team, Player, Statistics, Match, League, Match_Penalty,Match_Goal,Squad
 from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm,SquadForm
 from django.db.models import IntegerField, ExpressionWrapper, F
+from django.shortcuts import render, get_object_or_404, redirect
 # Create your views here.
 
 def loginPage(request):
@@ -330,8 +331,10 @@ def match_event_management(request,pk):
 
     return render(request,'base/admin_panel_context/Match_Event/match_event_management.html',context)
 
+'''
 def squad_management(request,pk):
-    match = Match.objects.get(id=pk)
+    #match = Match.objects.get(id=pk)
+    match = get_object_or_404(Match, id=pk)
     team1 = match.team1
     team2 = match.team2
 
@@ -339,9 +342,9 @@ def squad_management(request,pk):
     squad_team2 = Squad.objects.filter(match_id=pk, team=team2)
 
 
-    check = request.GET.get('q') if request.GET.get('q') != None else ''
-    check2 = request.GET.get('r') if request.GET.get('r') != None else ''
-    form = ""
+    check = request.GET.get('q', '')
+    check2 = request.GET.get('r', '')
+    form = None
 
     if (check == "add_player"):
 
@@ -349,17 +352,22 @@ def squad_management(request,pk):
         # context = {'form': form}
         # bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!
         if request.method == 'POST':
-            form = SquadForm(request.POST)
+            form = SquadForm(request.POST,team=team)
             if form.is_valid():
                 if check2 == "team1":
                     team = team1
                 else:
                     team = team2
                 # przypisuje automatycznie mecz bez ingerencji użytkownika
-                new_squad = SquadForm(match=match, player=form.cleaned_data['player'],
-                                      team=team)
+                #new_squad = SquadForm(match=match, player=form.cleaned_data['player'],team=team)
+                #new_squad.save()
+                new_squad = form.save(commit=False,team=team)
+                new_squad.match = match
+                new_squad.team = team
                 new_squad.save()
                 return redirect('squad_management', pk=pk)
+        else:
+            form = SquadForm(team=team)
 
     if (check == "delete_player"):
 
@@ -374,15 +382,64 @@ def squad_management(request,pk):
                 else:
                     team = team2
                 # przypisuje automatycznie mecz bez ingerencji użytkownika
-                new_penalty = SquadForm(match=match, player=form.cleaned_data['player'],
-                                            card=form.cleaned_data['card'], team=team)
+                new_penalty = SquadForm(match=match, player=form.cleaned_data['player'],card=form.cleaned_data['card'], team=team)
                 new_penalty.save()
                 return redirect('match_event_management', pk=pk)
 
     context = {'check': check, 'match': match, 'form': form, 'squad_team1':squad_team1,'squad_team2':squad_team2}
 
     return render(request, 'base/admin_panel_context/Squad/squad_management.html', context)
+'''
 
+def squad_management(request, pk):
+    match = get_object_or_404(Match, id=pk)
+    team1 = match.team1
+    team2 = match.team2
+
+    squad_team1 = Squad.objects.filter(match_id=pk, team=team1)
+    squad_team2 = Squad.objects.filter(match_id=pk, team=team2)
+
+    check = request.GET.get('q', '')
+    check2 = request.GET.get('r', '')
+    print(check2)
+    form = None
+
+    if check == "add_player":
+        if request.method == 'POST':
+            team = team1 if check2 == "team1" else team2
+            form = SquadForm(request.POST, team=team)
+            if form.is_valid():
+                new_squad = form.save(commit=False)
+                new_squad.match = match
+                new_squad.team = team
+                new_squad.save()
+                return redirect('squad_management', pk=pk)
+        else:
+            team = team1 if check2 == "team1" else team2
+            form = SquadForm(team=team)
+
+    elif check == "delete_player":
+        if request.method == 'POST':
+            team = team1 if check2 == "team1" else team2
+            form = SquadForm(request.POST, team=team)
+            if form.is_valid():
+                player = form.cleaned_data['player']
+                Squad.objects.filter(match=match, team=team, player=player).delete()
+                return redirect('squad_management', pk=pk)
+        else:
+            team = team1 if check2 == "team1" else team2
+            form = SquadForm(team=team)
+
+    context = {
+        'check': check,
+        'check2': check2,
+        'match': match,
+        'form': form,
+        'squad_team1': squad_team1,
+        'squad_team2': squad_team2,
+    }
+
+    return render(request, 'base/admin_panel_context/Squad/squad_management.html', context)
 
 def team(request,pk):
     team=Team.objects.filter(id=pk)

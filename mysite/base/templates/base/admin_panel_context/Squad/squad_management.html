@@ -27,12 +27,14 @@
 <div>
     <h2>{{match.team1.name}}</h2>
     <a href="{% url 'squad_management' match.id %}?q=add_player&r=team1" class="btn btn-success">Dodaj Zawodnika</a>
-{% if check == "add_player" %}
+{% if check == "add_player"  %}
+    {% if check2 == "team1" %}
         <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
         <input href="{% url 'squad_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
     </form>
+    {% endif %}
 {% endif %}
 
 <a href="{% url 'squad_management' match.id %}?q=delete_player&r=team1" class="btn btn-danger">Usuń Zawodnika</a>
@@ -51,12 +53,14 @@
 <div>
     <h2>{{match.team2.name}}</h2>
     <a href="{% url 'squad_management' match.id %}?q=add_player&r=team2" class="btn btn-success">Dodaj Zawodnika</a>
-{% if check == "add_player" %}
+{% if check == "add_player"  %}
+    {% if check2 == "team2" %}
         <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
         <input href="{% url 'squad_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
     </form>
+    {% endif %}
 {% endif %}
 
 <a href="{% url 'squad_management' match.id %}?q=delete_player&r=team2" class="btn btn-danger">Usuń Zawodnika</a>

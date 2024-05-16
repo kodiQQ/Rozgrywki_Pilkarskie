@@ -34,8 +34,34 @@ class MatchPenaltyForm(ModelForm):
         fields= '__all__'
         exclude=['match','team']
 
+
+'''
 class SquadForm(ModelForm):
     class Meta:
         model = Squad
-        fields= '__all__'
-        #exclude = ['match', 'team']
+        fields= ['player']
+
+    #funkcja ogranicza wybór piłkarzy do piłkarzy tylko z danej frużyny
+    def __init__(self, *args, **kwargs):
+        team = kwargs.pop('team', None)
+        super(SquadForm, self).__init__(*args, **kwargs)
+        if team:
+            self.fields['player'].queryset = Player.objects.filter(team=team)
+        else:
+            self.fields['player'].queryset = Player.objects.none()
+            '''
+
+
+class SquadForm(ModelForm):
+    class Meta:
+        model = Squad
+        fields = ['player']
+
+    def __init__(self, *args, **kwargs):
+        team = kwargs.pop('team', None)
+        super(SquadForm, self).__init__(*args, **kwargs)
+        if team:
+            self.fields['player'].queryset = Player.objects.filter(team=team)
+        else:
+            self.fields['player'].queryset = Player.objects.none()
+
