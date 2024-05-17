@@ -23,12 +23,20 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+class Matchday(models.Model):
+    number=models.IntegerField()
+
+    def __str__(self):
+        return f"Kolejka {self.number}"
+
+
 class Match(models.Model):
     team1 = models.ForeignKey(Team, related_name='team1_matches', on_delete=models.SET_NULL, null=True)
     team2 = models.ForeignKey(Team, related_name='team2_matches', on_delete=models.SET_NULL, null=True)
     referee = models.CharField(max_length=50)
     stadium = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
+    matchday_number = models.ForeignKey(Matchday, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return str(self.team1.name+" vs "+self.team2.name)
@@ -176,4 +184,5 @@ class Match_Goal(models.Model):
 
     def __str__(self):
         return f"Goal by {self.player} at {self.time} minute(s)"
+
 

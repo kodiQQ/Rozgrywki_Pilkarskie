@@ -13,6 +13,8 @@
 
 </style>
 
+{% include 'navbar.html' %}
+
 <div class="home-container">
 
     <div>
@@ -43,6 +45,8 @@
 
     </div>
     <div>
+        <p> <a href="{% url 'matchdays' %}" class="btn btn-primary" >Kolejki </a> </p>
+
         <table class="table table-bordered table-dark">
             <tr>
                 <td>
