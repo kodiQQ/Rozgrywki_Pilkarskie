@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="Matchdays-container">
+    <title>Kolejki - {{ league.name }}</title>
+    <h1>Kolejki {{ league.name }}</h1>
+    {% for matchday in matchdays %}
+        <h2>Kolejka {{ matchday.number }}</h2>
+        {% for match in matches %}
+            {% if match.matchday_number == matchday %}
+                <div>
+                    <a>{{ match.team1 }} vs {{ match.team2 }}</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endblock content %}

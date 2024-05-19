@@ -1,9 +1,10 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Match, Team, Statistics, Participation, Player, Squad, Scorer_Table,League,Season_table,Position,Type_of_Card,Match_Penalty
+from .models import Match,Matchday, Team, Statistics, Participation, Player, Squad, Scorer_Table,League,Season_table,Position,Type_of_Card,Match_Penalty
 from .models import Match_Goal
 admin.site.register(Match)
+admin.site.register(Matchday)
 admin.site.register(Team)
 admin.site.register(Statistics)
 admin.site.register(Participation)

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team, Player, Statistics, Match, League, Match_Penalty,Match_Goal,Squad
+from .models import Team, Player, Statistics, Match, League, Match_Penalty, Match_Goal, Squad, Matchday
 from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm,SquadForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 from django.shortcuts import render, get_object_or_404, redirect
@@ -101,6 +101,17 @@ def teams(request):
     teams=Team.objects.all()
     context={'teams':teams}
     return render(request,'base/teams.html',context)
+
+def matchdays(request):
+    # league = League.objects.get(pk=league_id)
+    # matchdays = Matchday.objects.filter(league=league)
+    # matches = Match.objects.filter(league=league)
+
+    matchdays = Matchday.objects.all()
+    matches = Match.objects.all()
+
+    context={'matchdays':matchdays, 'matches': matches}
+    return render(request,'base/matchdays.html',context)
 
 @login_required(login_url='/login')
 def admin_panel(request):
