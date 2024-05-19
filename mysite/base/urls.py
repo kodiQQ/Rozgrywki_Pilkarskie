@@ -7,7 +7,7 @@ urlpatterns = [
     path('logout/', views.logoutUser, name="logout"),
     path('', views.home, name="home"),
     path('teams/', views.teams, name="teams"),
-    path('matchdays/', views.matchdays, name="matchdays"),
+    path('queues/', views.queues, name="queues"),
     # path('matchdays<int:league_id>/', views.matchdays, name='matchdays'),
     path('team/<int:pk>',views.team, name='team'),
     path('player/<int:pk>',views.player, name='player'),
@@ -29,7 +29,8 @@ urlpatterns = [
 
     path('admin_panel/match_management/match_event_management/delete_penalty/<int:player_id>/<int:match_id>', views.match_event_penalty_delete, name="match_event_penalty_delete"),
     path('admin_panel/match_management/match_event_management/delete_goal/<int:player_id>/<int:match_id>/<int:time>', views.match_event_goal_delete, name="match_event_goal_delete"),
-    path('admin_panel/match_management/match_event_management/finish_match/<int:pk>',views.finish_match, name="finish_match"),
+    path('admin_panel/match_management/finish_match/<int:pk>',views.finish_match, name="finish_match"),
+    path('admin_panel/match_management/cancel_finish_match/<int:pk>',views.cancel_finish_match, name="cancel_finish_match"),
 
     path('admin_panel/match_management/squad/<int:pk>',views.squad_management ,name="squad_management"),
     path('admin_panel/league_management/', views.league_management, name="league_management"),
@@ -40,6 +41,7 @@ urlpatterns = [
     path('statistics/<int:pk>', views.statistics,name='statistics'),
 
     path('admin_panel/match_management/',views.match_management,name="match_management"),
+    path('admin_panel/finished_match_management/',views.finished_match_management,name="finished_match_management"),
     #path('admin_panel/team_management/add_team',views.team_management,name="team_add"),
 
 

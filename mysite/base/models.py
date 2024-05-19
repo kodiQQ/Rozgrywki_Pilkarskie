@@ -23,7 +23,7 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
-class Matchday(models.Model):
+class Queue(models.Model):
     number=models.IntegerField()
 
     def __str__(self):
@@ -36,7 +36,8 @@ class Match(models.Model):
     referee = models.CharField(max_length=50)
     stadium = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
-    matchday_number = models.ForeignKey(Matchday, on_delete=models.SET_NULL, null=True)
+    queue_number = models.ForeignKey(Queue, on_delete=models.SET_NULL, null=True, default=1)
+    finished = models.BooleanField(default=False)
 
 
     def __str__(self):
@@ -72,11 +73,11 @@ class Season_table(models.Model):
 
 class Statistics(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    wins = models.IntegerField()
-    draws = models.IntegerField()
-    loses = models.IntegerField()  # Typo corrected: 'loses' to 'losses'
-    goals = models.IntegerField()
-    goals_lost = models.IntegerField()
+    wins = models.IntegerField(default=0)
+    draws = models.IntegerField(default=0)
+    loses = models.IntegerField(default=0)  # Typo corrected: 'loses' to 'losses'
+    goals = models.IntegerField(default=0)
+    goals_lost = models.IntegerField(default=0)
     def __str__(self):
         return f"{self.team.name} Statistics"  # Provides a human-readable string representation
     @property

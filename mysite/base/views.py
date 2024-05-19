@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team, Player, Statistics, Match, League, Match_Penalty, Match_Goal, Squad, Matchday
-from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm,SquadForm
+from .models import Team, Player, Statistics, Match, League, Match_Penalty, Match_Goal, Squad, Queue
+from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm,SquadForm,StatisticsForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 from django.shortcuts import render, get_object_or_404, redirect
 # Create your views here.
@@ -42,6 +42,7 @@ def logoutUser(request):
 
 
 def home(request):
+
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     matches = Match.objects.filter(
         Q(league__name__icontains=q) |
@@ -102,16 +103,16 @@ def teams(request):
     context={'teams':teams}
     return render(request,'base/teams.html',context)
 
-def matchdays(request):
+def queues(request):
     # league = League.objects.get(pk=league_id)
     # matchdays = Matchday.objects.filter(league=league)
     # matches = Match.objects.filter(league=league)
 
-    matchdays = Matchday.objects.all()
+    matchdays = Queue.objects.all()
     matches = Match.objects.all()
 
-    context={'matchdays':matchdays, 'matches': matches}
-    return render(request,'base/matchdays.html',context)
+    context={'queues':queues, 'matches': matches}
+    return render(request,'base/queues.html',context)
 
 @login_required(login_url='/login')
 def admin_panel(request):
@@ -207,10 +208,14 @@ def player_management(request):
 
 @login_required(login_url='/login')
 def match_management(request):
-    matches = Match.objects.all()
+    matches = Match.objects.filter(finished=False)
     context = {'matches': matches}
     return render(request,'base/admin_panel_context/Match/match_management.html',context)
 
+def finished_match_management(request):
+    matches = Match.objects.filter(finished=True)
+    context = {'matches': matches}
+    return render(request,'base/admin_panel_context/Finished_Match/finished_match_management.html',context)
 #MATCH
 
 @login_required(login_url='/login')
@@ -413,10 +418,97 @@ def squad_management(request, pk):
 
 def finish_match(request,pk):
     match=Match.objects.get(id=pk)
-    form=FinishedMatchForm()
-    new_match = form.save(commit=False)
-    new_match = match
-    new_match.save()
+
+    #sprawdzenie czy pole statystyki istnieje:
+    try:
+        Statistics.objects.get(team=match.team1)
+    except:
+        form=StatisticsForm()
+        new_statistics = form.save(commit=False)
+        new_statistics.team = match.team1
+        new_statistics.save()
+
+    try:
+        Statistics.objects.get(team=match.team2)
+    except:
+        form=StatisticsForm()
+        new_statistics = form.save(commit=False)
+        new_statistics.team = match.team2
+        new_statistics.save()
+
+
+    if match.finished==False:
+        match.finished=True
+        match.save()
+        try:
+            team1_goals=Match_Goal.objects.filter(match=match,team=match.team1)
+            team1_goals_count=len(team1_goals)
+            team2_goals = Match_Goal.objects.filter(match=match, team=match.team2)
+            team2_goals_count = len(team2_goals)
+            team1_statistics=Statistics.objects.get(team=match.team1)
+            team2_statistics = Statistics.objects.get(team=match.team2)
+
+            if team1_goals_count == team2_goals_count:
+                team1_statistics.draws=team1_statistics.draws+1
+                team2_statistics.draws = team2_statistics.draws + 1
+
+            elif  team1_goals_count > team2_goals_count:
+                team1_statistics.wins= team1_statistics.wins+1
+                team2_statistics.loses=team2_statistics.loses+1
+            else:
+                team1_statistics.loses = team1_statistics.loses + 1
+                team2_statistics.wins = team2_statistics.wins + 1
+
+            team1_statistics.goals=team1_statistics.goals+team1_goals_count
+            team1_statistics.goals_lost=team1_statistics.goals_lost+team2_goals_count
+            team2_statistics.goals = team2_statistics.goals + team2_goals_count
+            team2_statistics.goals_lost = team2_statistics.goals_lost + team1_goals_count
+
+            team1_statistics.save()
+            team2_statistics.save()
+        except:
+            1
+
+
+    return redirect('match_management')
+
+def cancel_finish_match(request,pk):
+    match=Match.objects.get(id=pk)
+
+    if match.finished==True:
+        match.finished=False
+        match.save()
+        try:
+            team1_goals=Match_Goal.objects.filter(match=match,team=match.team1)
+            team1_goals_count=len(team1_goals)
+            team2_goals = Match_Goal.objects.filter(match=match, team=match.team2)
+            team2_goals_count = len(team2_goals)
+            team1_statistics=Statistics.objects.get(team=match.team1)
+            team2_statistics = Statistics.objects.get(team=match.team2)
+
+            if team1_goals_count == team2_goals_count:
+                team1_statistics.draws=team1_statistics.draws-1
+                team2_statistics.draws = team2_statistics.draws-1
+
+            elif  team1_goals_count > team2_goals_count:
+                team1_statistics.wins= team1_statistics.wins-1
+                team2_statistics.loses=team2_statistics.loses-1
+            else:
+                team1_statistics.loses = team1_statistics.loses-1
+                team2_statistics.wins = team2_statistics.wins-1
+
+            team1_statistics.goals=team1_statistics.goals-team1_goals_count
+            team1_statistics.goals_lost=team1_statistics.goals_lost-team2_goals_count
+            team2_statistics.goals = team2_statistics.goals - team2_goals_count
+            team2_statistics.goals_lost = team2_statistics.goals_lost - team1_goals_count
+
+            team1_statistics.save()
+            team2_statistics.save()
+        except:
+            1
+
+
+    return redirect('finished_match_management')
 
 
 

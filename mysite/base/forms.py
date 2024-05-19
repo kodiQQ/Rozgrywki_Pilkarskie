@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Team, Player, Match, League,Match_Goal,Match_Penalty,Squad
+from .models import Team, Player, Match, League,Match_Goal,Match_Penalty,Squad,Statistics
 
 class TeamForm(ModelForm):
     class Meta:
@@ -14,6 +14,12 @@ class PlayerForm(ModelForm):
 class MatchForm(ModelForm):
     class Meta:
         model = Match
+        fields= '__all__'
+        exclude = ['finished']
+
+class StatisticsForm(ModelForm):
+    class Meta:
+        model = Statistics
         fields= '__all__'
 
 '''
