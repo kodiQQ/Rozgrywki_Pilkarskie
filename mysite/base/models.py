@@ -30,22 +30,30 @@ class Match(models.Model):
     stadium = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
 
+
     def __str__(self):
-        return str(self.team1.name+" vs "+self.team2.name)
-
-
-
-
-    # Dodajemy ograniczenie UniqueConstraint, aby para (team1, team2) była unikalna
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['team1', 'team2'], name='unique_match')
-        ]
+        return f"{self.team1.name} vs {self.team2.name}"
 
     def clean(self):
         # Sprawdzamy, czy team1 i team2 są takie same
         if self.team1 == self.team2:
             raise ValidationError("Team1 and Team2 cannot be the same.")
+
+    class Meta:
+        # Dodajemy ograniczenie UniqueConstraint, aby para (team1, team2) była unikalna
+        constraints = [
+            models.UniqueConstraint(fields=['team1', 'team2'], name='unique_match')
+        ]
+
+'''
+class Finished_Match(models.Model):
+    team1 = models.ForeignKey(Team, related_name='finished_team1_matches', on_delete=models.SET_NULL, null=True)
+    team2 = models.ForeignKey(Team, related_name='finished_team2_matches', on_delete=models.SET_NULL, null=True)
+    referee = models.CharField(max_length=50)
+    stadium = models.CharField(max_length=50)
+    league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
+'''
+
 
 
 

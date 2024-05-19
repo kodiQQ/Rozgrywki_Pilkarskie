@@ -12,7 +12,7 @@
     {% for match in matches %}
     <div>
 
-        <p> <a href="{% url 'match_delete' match.id %}" class="btn btn-danger">Usuń </a> <a href="{% url 'match_edit' match.id %}" class="btn btn-primary">Edytuj </a> <a href="{% url 'match_event_management' match.id %}" class="btn btn-success">Zarządzaj zdarzniami meczowymi </a> <a href="{% url 'squad_management' match.id %}" class="btn btn-success"> Zarządzaj składem </a>  {{match.team1 }} vs {{match.team2}}</p>
+        <p> <a href="{% url 'match_delete' match.id %}" class="btn btn-danger">Usuń </a> <a href="{% url 'match_edit' match.id %}" class="btn btn-primary">Edytuj </a> <a href="{% url 'match_event_management' match.id %}" class="btn btn-success">Zarządzaj zdarzniami meczowymi </a> <a href="{% url 'squad_management' match.id %}" class="btn btn-success"> Zarządzaj składem </a> <a href="{% url 'squad_management' match.id %}" class="btn btn-success"> Zakończ mecz </a> {{match.team1 }} vs {{match.team2}}</p>
 
     </div>
     {% endfor %}

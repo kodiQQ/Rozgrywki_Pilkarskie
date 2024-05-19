@@ -27,25 +27,27 @@
 <div>
     <h2>{{match.team1.name}}</h2>
     <a href="{% url 'squad_management' match.id %}?q=add_player&r=team1" class="btn btn-success">Dodaj Zawodnika</a>
+    <a href="{% url 'squad_management' match.id %}?q=delete_player&r=team1" class="btn btn-danger">Usuń Zawodnika</a>
+
 {% if check == "add_player"  %}
     {% if check2 == "team1" %}
         <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
-        <input href="{% url 'squad_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
+        <input href="{% url 'squad_management' match.id %}" type="submit" value="Dodaj" class="btn btn-success" />
     </form>
     {% endif %}
 {% endif %}
 
-<a href="{% url 'squad_management' match.id %}?q=delete_player&r=team1" class="btn btn-danger">Usuń Zawodnika</a>
-{% if check == "delete_player" %}
 
+{% if check == "delete_player" %}
+    {% if check2 == "team1" %}
     <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
-        <input  type="submit" value="Zatwierdź" class="btn btn-success" />
+        <input  type="submit" value="Usuń" class="btn btn-danger" />
     </form>
-
+    {% endif %}
 {% endif %}
 </div>
 
@@ -53,25 +55,27 @@
 <div>
     <h2>{{match.team2.name}}</h2>
     <a href="{% url 'squad_management' match.id %}?q=add_player&r=team2" class="btn btn-success">Dodaj Zawodnika</a>
+    <a href="{% url 'squad_management' match.id %}?q=delete_player&r=team2" class="btn btn-danger">Usuń Zawodnika</a>
+
 {% if check == "add_player"  %}
     {% if check2 == "team2" %}
         <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
-        <input href="{% url 'squad_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
+        <input href="{% url 'squad_management' match.id %}" type="submit" value="Dodaj" class="btn btn-success" />
     </form>
     {% endif %}
 {% endif %}
 
-<a href="{% url 'squad_management' match.id %}?q=delete_player&r=team2" class="btn btn-danger">Usuń Zawodnika</a>
-{% if check == "delete_player" %}
 
+{% if check == "delete_player" %}
+    {% if check2 == "team2" %}
     <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
-        <input  type="submit" value="Zatwierdź" class="btn btn-success" />
+        <input  type="submit" value="Usuń" class="btn btn-danger" />
     </form>
-
+    {% endif %}
 {% endif %}
 </div>
 
@@ -95,7 +99,7 @@
     {% for st1 in squad_team1 %}
     <tr>
         <td>
-            {{st1.player.name}}
+            {{st1.player.name}} {{st1.player.surname}}
         </td>
         <td>
             {{st1.player.number}}
@@ -123,7 +127,7 @@
     {% for st2 in squad_team2 %}
     <tr>
         <td>
-            {{st2.player.name}}
+            {{st2.player.name}} {{st2.player.surname}}
         </td>
         <td>
             {{st2.player.number}}

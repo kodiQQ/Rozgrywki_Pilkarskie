@@ -27,48 +27,47 @@
 <div>
     <h2>{{match.team1.name}}</h2>
     <a href="{% url 'match_event_management' match.id %}?q=add_goal&r=team1" class="btn btn-success">Dodaj gola</a>
-{% if check == "add_goal" %}
+    <a href="{% url 'match_event_management' match.id %}?q=add_penalty&r=team1" class="btn btn-success">Dodaj przewinienie</a>
+
+
+    {% if check == "add_goal" or check == "add_penalty" %}
+    {% if check2 == "team1" %}
         <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
         <input href="{% url 'match_event_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
     </form>
-{% endif %}
+    {% endif %}
+    {% endif %}
 
-<a href="{% url 'match_event_management' match.id %}?q=add_penalty&r=team1" class="btn btn-danger">Dodaj przewinienie</a>
-{% if check == "add_penalty" %}
-
-    <form method="POST" action="" >
-        {% csrf_token %}
-        {{form.as_p}}
-        <input  type="submit" value="Zatwierdź" class="btn btn-success" />
-    </form>
-
-{% endif %}
 </div>
 
     <div></div>
 <div>
     <h2>{{match.team2.name}}</h2>
     <a href="{% url 'match_event_management' match.id %}?q=add_goal&r=team2" class="btn btn-success">Dodaj gola</a>
-{% if check == "add_goal" %}
+    <a href="{% url 'match_event_management' match.id %}?q=add_penalty&r=team2" class="btn btn-success">Dodaj przewinienie</a>
+
+    {% if check == "add_goal" or check == "add_penalty" %}
+    {% if check2 == "team2" %}
         <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
         <input href="{% url 'match_event_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
     </form>
-{% endif %}
+    {% endif %}
+    {% endif %}
 
-<a href="{% url 'match_event_management' match.id %}?q=add_penalty&r=team2" class="btn btn-danger">Dodaj przewinienie</a>
-{% if check == "add_penalty" %}
 
-    <form method="POST" action="" >
+        {% if check == "delete_goal" or check == "delete_penalty" %}
+    {% if check2 == "team2" %}
+        <form method="POST" action="" >
         {% csrf_token %}
         {{form.as_p}}
-        <input  type="submit" value="Zatwierdź" class="btn btn-success" />
+        <input href="{% url 'match_event_management' match.id %}" type="submit" value="Zatwierdź" class="btn btn-success" />
     </form>
-
-{% endif %}
+    {% endif %}
+    {% endif %}
 </div>
 
 </div>
@@ -87,6 +86,9 @@
         <td>
             Kartka
         </td>
+                <td>
+
+        </td>
     </tr>
     {% for mp in match_penalties_team1 %}
     <tr>
@@ -96,9 +98,12 @@
         <td>
             {{mp.card.type}}
         </td>
+                <td>
+            <a href="{% url 'match_event_penalty_delete' mp.player.id mp.match.id %}" class="btn btn-danger">Usuń</a>
+        </td>
     </tr>
     {% endfor %}
-</table>
+    </table>
     </div>
 
     <div>
@@ -115,6 +120,9 @@
         <td>
             Kartka
         </td>
+        <td>
+
+        </td>
     </tr>
     {% for mp in match_penalties_team2 %}
     <tr>
@@ -124,6 +132,10 @@
         <td>
             {{mp.card.type}}
         </td>
+        <td>
+            <a href="{% url 'match_event_penalty_delete' mp.player.id mp.match.id %}" class="btn btn-danger">Usuń</a>
+        </td>
+
     </tr>
     {% endfor %}
 </table>
@@ -142,6 +154,7 @@
         <td>
             minuta
         </td>
+        <td></td>
     </tr>
     {% for mg in match_goals_team1 %}
     <tr>
@@ -150,6 +163,9 @@
         </td>
         <td>
             {{mg.time}}
+        </td>
+                <td>
+            <a href="{% url 'match_event_goal_delete' mg.player.id mg.match.id mg.time %} " class="btn btn-danger">Usuń</a>
         </td>
     </tr>
     {% endfor %}
@@ -168,6 +184,9 @@
         <td>
             minuta
         </td>
+        <td>
+
+        </td>
     </tr>
     {% for mg in match_goals_team2 %}
     <tr>
@@ -176,6 +195,9 @@
         </td>
         <td>
             {{mg.time}}
+        </td>
+                <td>
+            <a href="{% url 'match_event_goal_delete' mg.player.id mg.match.id mg.time  %}" class="btn btn-danger">Usuń</a>
         </td>
     </tr>
     {% endfor %}

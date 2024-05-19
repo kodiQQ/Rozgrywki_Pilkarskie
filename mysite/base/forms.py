@@ -16,6 +16,13 @@ class MatchForm(ModelForm):
         model = Match
         fields= '__all__'
 
+'''
+class FinishedMatchForm(ModelForm):
+    class Meta:
+        model = Finished_Match
+        fields= '__all__'
+        '''
+
 class LeagueForm(ModelForm):
     class Meta:
         model = League
@@ -28,11 +35,28 @@ class MatchGoalForm(ModelForm):
         fields= '__all__'
         exclude=['match','team']
 
+    def __init__(self, *args, **kwargs):
+        team = kwargs.pop('team', None)
+        super(MatchGoalForm, self).__init__(*args, **kwargs)
+        if team:
+            self.fields['player'].queryset = Player.objects.filter(team=team)
+        else:
+            self.fields['player'].queryset = Player.objects.none()
+
+
 class MatchPenaltyForm(ModelForm):
     class Meta:
         model = Match_Penalty
-        fields= '__all__'
-        exclude=['match','team']
+        fields= ['player','card']
+
+
+    def __init__(self, *args, **kwargs):
+        team = kwargs.pop('team', None)
+        super(MatchPenaltyForm, self).__init__(*args, **kwargs)
+        if team:
+            self.fields['player'].queryset = Player.objects.filter(team=team)
+        else:
+            self.fields['player'].queryset = Player.objects.none()
 
 
 '''
