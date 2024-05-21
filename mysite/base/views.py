@@ -45,9 +45,9 @@ def home(request):
 
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     matches = Match.objects.filter(
-        Q(league__name__icontains=q) |
+        (Q(league__name__icontains=q) |
         Q(team1__name__icontains=q) |
-        Q(team2__name__icontains=q)
+        Q(team2__name__icontains=q))&Q(finished=False)
     )
     leagues = League.objects.all()
     match_count = matches.count()
@@ -448,6 +448,17 @@ def finish_match(request,pk):
             team1_statistics=Statistics.objects.get(team=match.team1)
             team2_statistics = Statistics.objects.get(team=match.team2)
 
+            for g in team1_goals:
+                p = Player.objects.get(id=g.player.id)
+                p.goals = p.goals + 1
+                p.save()
+
+            for g in team2_goals:
+                p = Player.objects.get(id=g.player.id)
+                p.goals = p.goals + 1
+                p.save()
+
+
             if team1_goals_count == team2_goals_count:
                 team1_statistics.draws=team1_statistics.draws+1
                 team2_statistics.draws = team2_statistics.draws + 1
@@ -470,6 +481,8 @@ def finish_match(request,pk):
             1
 
 
+
+
     return redirect('match_management')
 
 def cancel_finish_match(request,pk):
@@ -485,6 +498,16 @@ def cancel_finish_match(request,pk):
             team2_goals_count = len(team2_goals)
             team1_statistics=Statistics.objects.get(team=match.team1)
             team2_statistics = Statistics.objects.get(team=match.team2)
+
+            for g in team1_goals:
+                p = Player.objects.get(id=g.player.id)
+                p.goals = p.goals - 1
+                p.save()
+
+            for g in team2_goals:
+                p = Player.objects.get(id=g.player.id)
+                p.goals = p.goals - 1
+                p.save()
 
             if team1_goals_count == team2_goals_count:
                 team1_statistics.draws=team1_statistics.draws-1
@@ -524,3 +547,17 @@ def player(request,pk):
     player=Player.objects.get(id=pk)
     context = {'player': player}
     return render(request, 'base/player.html', context)
+
+def player_statistics(request,pk):
+    league_obj = League.objects.get(pk=pk)
+    league_id1 = league_obj.id
+    teams=Team.objects.filter(league_id=league_id1)
+    player_statistics0 = Player.objects.filter(team__in=teams)
+
+    #sortuje względem punktów
+    players = player_statistics0.annotate(
+        total_goals=ExpressionWrapper(F('goals'), output_field=IntegerField())
+    ).order_by('-total_goals')
+
+    context={'players':players}
+    return render(request, 'base/player_statistics.html',context)

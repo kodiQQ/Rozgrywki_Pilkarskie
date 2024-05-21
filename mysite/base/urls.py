@@ -39,6 +39,7 @@ urlpatterns = [
     path('admin_panel/league_management/league_edit/<int:pk>', views.league_edit, name="league_edit"),
 
     path('statistics/<int:pk>', views.statistics,name='statistics'),
+    path('playerstatistics/<int:pk>', views.player_statistics,name='player_statistics'),
 
     path('admin_panel/match_management/',views.match_management,name="match_management"),
     path('admin_panel/finished_match_management/',views.finished_match_management,name="finished_match_management"),

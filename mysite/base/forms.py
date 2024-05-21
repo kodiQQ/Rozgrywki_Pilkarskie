@@ -10,6 +10,7 @@ class PlayerForm(ModelForm):
     class Meta:
         model = Player
         fields= '__all__'
+        exclude = ['goals']
 
 class MatchForm(ModelForm):
     class Meta:

@@ -112,6 +112,7 @@ class Player(models.Model):
     age = models.IntegerField()
     nationality = models.TextField(max_length=20)
     number = models.IntegerField()
+    goals = models.IntegerField(default=0)
     #position = models.TextField(max_length=20)
 
     def __str__(self):

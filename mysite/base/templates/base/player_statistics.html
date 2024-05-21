@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="Statistics container">
+
+    <div>
+        <h1> Tabela Wyników</h1>
+    </div>
+    <table class="table table-bordered table-warning">
+        <tr>
+            <td>
+                <h2>Piłkarz</h2>
+            </td>
+
+            <td>
+                <h2>Drużyna</h2>
+            </td>
+
+            <td>
+                <h2>Liczba Goli</h2>
+            </td>
+        </tr>
+        {% for p in players %}
+        <tr>
+
+            <td>
+                <p> {{p.name}} {{p.surname}}</p>
+            </td>
+
+            <td>
+                <p>{{p.team}} </p>
+            </td>
+
+            <td>
+                <p>{{p.goals}} </p>
+            </td>
+
+        </tr>
+        {% endfor%}
+    </table>
+
+
+
+
+
+
+</div>
+
+
+{% endblock content %}

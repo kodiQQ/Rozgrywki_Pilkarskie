@@ -32,6 +32,7 @@
             <td>
                 <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="transition: color 0.3s ease;">{{league}}</a>
             <a href="{% url 'statistics' league.id %}"> Statystyki drużyn </a>
+                <a href="{% url 'player_statistics' league.id %}"> Statystyki piłkarzy </a>
             </td>
         </tr>
 
