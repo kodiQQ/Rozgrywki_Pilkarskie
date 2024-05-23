@@ -18,6 +18,19 @@ class MatchForm(ModelForm):
         fields= '__all__'
         exclude = ['finished']
 
+        def __init__(self, *args, **kwargs):
+            super(MatchForm, self).__init__(*args, **kwargs)
+            if 'league' in self.data:
+                try:
+                    league_id = int(self.data.get('league'))
+                    self.fields['queue_number'].queryset = Queue.objects.filter(league_id=league_id).order_by('number')
+                except (ValueError, TypeError):
+                    pass  # invalid input from the client; ignore and fallback to empty Queue queryset
+            elif self.instance.pk and self.instance.league:
+                self.fields['queue_number'].queryset = self.instance.league.queue_set.order_by('number')
+            else:
+                self.fields['queue_number'].queryset = Queue.objects.none()
+
 class StatisticsForm(ModelForm):
     class Meta:
         model = Statistics

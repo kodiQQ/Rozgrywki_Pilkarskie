@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="queue-matches-container">
+    <title>Mecze Kolejki - {{ league.name }}</title>
+    <h1>Mecze Kolejki {{ queue.number }} - {{ league.name }}</h1>
+    {% if matches %}
+        {% for match in matches %}
+            <div>
+                <p>{{ match.team1 }} vs {{ match.team2 }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Brak meczów dla tej kolejki.</p>
+    {% endif %}
+</div>
+{% endblock content %}

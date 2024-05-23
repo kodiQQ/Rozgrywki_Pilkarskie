@@ -1,18 +1,23 @@
 {% extends 'main.html' %}
 
+{% block title %}
+    Lista Meczów
+{% endblock title %}
+
 {% block content %}
-<div class="queues-container">
-    <title>Kolejki - {{ league.name }}</title>
-    <h1>Kolejki {{ league.name }}</h1>
+<h1>Lista Meczów dla {{ league.name }}</h1>
+<div class="queue-container">
     {% for queue in queues %}
-        <h2>Kolejka {{ queue.number }}</h2>
-        {% for match in matches %}
-            {% if match.queue_number == queue %}
-                <div>
-                    <a>{{ match.team1 }} vs {{ match.team2 }}</a>
-                </div>
-            {% endif %}
-        {% endfor %}
+        <h2>{{ queue }}</h2>
+        <ul>
+            {% for match in queue.matches.all %}
+                <li>{{ match.team1.name }} vs {{ match.team2.name }}</li>
+            {% empty %}
+                <li>Brak meczów w tej kolejce.</li>
+            {% endfor %}
+        </ul>
+    {% empty %}
+        <p>Brak kolejek w tej lidze.</p>
     {% endfor %}
 </div>
 {% endblock content %}

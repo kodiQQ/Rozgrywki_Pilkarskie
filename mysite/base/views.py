@@ -9,6 +9,7 @@ from .models import Team, Player, Statistics, Match, League, Match_Penalty, Matc
 from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm,SquadForm,StatisticsForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 # Create your views here.
 
 def loginPage(request):
@@ -103,16 +104,6 @@ def teams(request):
     context={'teams':teams}
     return render(request,'base/teams.html',context)
 
-def queues(request):
-    # league = League.objects.get(pk=league_id)
-    # matchdays = Matchday.objects.filter(league=league)
-    # matches = Match.objects.filter(league=league)
-
-    matchdays = Queue.objects.all()
-    matches = Match.objects.all()
-
-    context={'queues':queues, 'matches': matches}
-    return render(request,'base/queues.html',context)
 
 @login_required(login_url='/login')
 def admin_panel(request):
@@ -289,6 +280,63 @@ def league_delete(request,pk):
         return redirect('league_management')
     context={'obj':league}
     return render(request, 'base/admin_panel_context/League/league_delete.html',context)
+
+
+
+# def queues(request, league_id):
+#     league = League.objects.get(pk=league_id)
+#     queues = Queue.objects.filter(league=league)
+#     matches = Match.objects.filter(queue_number__league=league)  # używaj poprawnego klucza do filtrowania
+#
+#     print("Liczba meczów:", matches.count())  # debugowanie
+#
+#     context = {
+#         'league': league,
+#         'queues': queues,
+#         'matches': matches
+#     }
+#     return render(request, 'base/queues.html', context)
+
+#------------DZIAŁA ALE NIE FILTRUJE PO LIGACH----------
+# def queues(request):
+#     # league = League.objects.get(pk=league_id)
+#     # queues = Queue.objects.filter(league=league)
+#     queues = Queue.objects.all()
+#
+#     context = {'queues': queues}
+#     return render(request, 'base/queues.html', context)
+
+def get_queues(request):
+    league_id = request.GET.get('league_id')
+    queues = Queue.objects.filter(league_id=league_id).values('id', 'number')
+    return JsonResponse({'queues': list(queues)})
+def queues(request, league_id):
+    league = get_object_or_404(League, pk=league_id)
+    queues = Queue.objects.filter(league=league)
+
+    # Debugging prints
+    print(f"League: {league.name}")
+    print(f"Queues count: {queues.count()}")
+    for queue in queues:
+        print(f"Queue: {queue.number}")
+        matches = queue.matches.all()
+        print(f"Matches in Queue {queue.number}: {matches.count()}")
+        for match in matches:
+            print(f"Match: {match.team1.name} vs {match.team2.name}")
+
+    context = {'league': league, 'queues': queues}
+    return render(request, 'base/queues.html', context)
+
+
+# def queue_matches(request, league_id, queue_number):
+#     league = League.objects.get(pk=league_id)
+#     queue = Queue.objects.get(league=league, number=queue_number)
+#     matches = Match.objects.filter(queue_number=queue)  # Filtrowanie meczów dla konkretnej kolejki
+#
+#     print("Liczba meczów:", matches.count())
+#
+#     context = {'league': league, 'queue': queue, 'matches': matches}
+#     return render(request, 'base/queue_matches.html', context)
 
 
 def match_event_management(request,pk):

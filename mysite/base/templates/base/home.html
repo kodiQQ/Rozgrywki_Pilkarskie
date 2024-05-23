@@ -28,11 +28,13 @@
         </tr>
 
         {% for league in leagues %}
+
         <tr>
             <td>
-                <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="transition: color 0.3s ease;">{{league}}</a>
-            <a href="{% url 'statistics' league.id %}"> Statystyki drużyn </a>
+                <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="transition: color 0.3s ease;">{{ league }}</a>
+                <a href="{% url 'statistics' league.id %}"> Statystyki drużyn </a>
                 <a href="{% url 'player_statistics' league.id %}"> Statystyki piłkarzy </a>
+                <p><a href="{% url 'queues' league.id %}">Kolejki</a></p>
             </td>
         </tr>
 
@@ -46,7 +48,6 @@
 
     </div>
     <div>
-        <p> <a href="{% url 'queues' %}" class="btn btn-primary" >Kolejki </a> </p>
 
         <table class="table table-bordered table-dark">
             <tr>

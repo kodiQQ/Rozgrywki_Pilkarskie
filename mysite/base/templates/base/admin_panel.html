@@ -1,5 +1,13 @@
 {% extends 'main.html' %}
 
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% static 'mysite/static/custom.js' %}"></script>
+{% endblock %}
+
+
 {% block content %}
 
 <div class="admin container" style="margin-top: 20px;">

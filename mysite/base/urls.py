@@ -8,7 +8,11 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('teams/', views.teams, name="teams"),
     path('queues/', views.queues, name="queues"),
-    # path('matchdays<int:league_id>/', views.matchdays, name='matchdays'),
+    path('queues/<int:league_id>/', views.queues, name='queues'),
+    #path('matchdays<int:league_id>/', views.matchdays, name='matchdays'),
+    #path('queues/<int:league_id>/', views.queues, name='queues'),
+    #path('queues/<int:league_id>/', views.queues, name='queues'),
+    #path('queues/<int:league_id>/<int:queue_number>/', views.queue_matches, name='queue_matches'),
     path('team/<int:pk>',views.team, name='team'),
     path('player/<int:pk>',views.player, name='player'),
     path('admin_panel/',views.admin_panel,name="admin_panel"),
@@ -43,6 +47,7 @@ urlpatterns = [
 
     path('admin_panel/match_management/',views.match_management,name="match_management"),
     path('admin_panel/finished_match_management/',views.finished_match_management,name="finished_match_management"),
+    path('api/get-queues/', views.get_queues, name='get_queues'),
     #path('admin_panel/team_management/add_team',views.team_management,name="team_add"),
 
 
