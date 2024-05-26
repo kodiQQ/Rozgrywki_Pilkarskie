@@ -2,47 +2,45 @@
 
 {% load static %}
 
-{% block extrahead %}
-    {{ block.super }}
-    <script src="{% static 'mysite/static/custom.js' %}"></script>
-{% endblock %}
-
 
 {% block content %}
 
+<style>
+    .option{
+        padding: 10px;
+        background-color: #353535;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    a{
+        text-decoration: none;
+        color: white;
+    }
+
+</style>
+
+<a style="margin-top: 20px; margin-left: 10px;" class="btn btn-info" href="{% url 'home' %}"> Powrót </a>
+
+
 <div class="admin container" style="margin-top: 20px;">
-    <table class="table table-bordered table-warning">
-    <tr>
-        <td>
-            <a href="{% url 'team_management' %}" > Zarządzanie drużynami </a>
-        </td>
 
-    </tr>
-    <tr>
-        <td>
-            <a href="{% url 'player_management' %}"> Zarządzanie piłkarzami </a>
-        </td>
+    <div class="option">
+        <a href="{% url 'team_management' %}"> <h5>Zarządzanie drużynami</h5> </a>
+    </div>
 
-    </tr>
-    <tr>
-        <td>
-            <a href="{% url 'match_management' %}"> Zarządzanie meczami nadchodzącymi / aktywnymi</a>
-        </td>
+    <div class="option">
+            <a href="{% url 'match_management' %}"> <h5>Zarządzanie meczami nadchodzącymi / aktywnymi</h5> </a>
+    </div>
 
-    </tr>
-    <tr>
-        <td>
-            <a href="{% url 'finished_match_management' %}"> Zarządzanie meczami zakończonymi</a>
-        </td>
+    <div class="option">
+            <a href="{% url 'finished_match_management' %}"> <h5>Zarządzanie meczami zakończonymi<h5> </h5></a>
+    </div>
 
-    </tr>
-    <tr>
-        <td>
-            <a href="{% url 'league_management' %}"> Zarządzanie ligami </a>
-        </td>
+    <div class="option">
+            <a href="{% url 'league_management' %}"> <h5>Zarządzanie ligami</h5> </a>
+    </div>
 
-    </tr>
-    </table>
 
 </div>
 

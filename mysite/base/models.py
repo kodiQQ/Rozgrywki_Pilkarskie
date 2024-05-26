@@ -37,7 +37,7 @@ class Match(models.Model):
     referee = models.CharField(max_length=50)
     stadium = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
-    queue_number = models.IntegerField()
+    queue_number = models.IntegerField(default=1)
     finished = models.BooleanField(default=False)
 
     def __str__(self):
