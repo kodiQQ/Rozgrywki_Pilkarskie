@@ -1,6 +1,6 @@
 {% load static %}
 
-
+<div style="margin-top: 10px;">
 <form method="GET" action="{% url 'home' %}">
     <input type="text" name="q" placeholder="Szukaj meczy..." />
 </form>
@@ -8,22 +8,20 @@
 
 {% if request.user.is_authenticated %}
 
-    <a href=" {% url 'logout' %} " class="btn btn-secondary">Wyloguj się</a>
+<a style="margin-top: 10px;" href=" {% url 'logout' %} " class="btn btn-danger">Wyloguj się</a>
 
 
 
-<a href=" {% url 'admin_panel' %} " class="btn btn-warning">Panel administratora</a>
+<a style="margin-top: 10px;" href="{% url 'admin_panel' %}" class="btn btn-warning">Panel administratora</a>
 
 {% else %}
 
 
-<a href=" {% url 'login' %} " class="btn btn-primary">Zaloguj się</a>
-
-
-
+<a style="margin-top: 10px;" href="{% url 'login' %}" class="btn btn-primary">Zaloguj się</a>
 
 
 {% endif %}
 
-
 <hr>
+
+</div>

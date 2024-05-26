@@ -1,6 +1,29 @@
 {% extends 'main.html' %}
 
 {% block content %}
+
+<style>
+    .player-container{
+        background-color: #353535;
+        margin-bottom: 20px;
+        border-radius: 10px;
+
+    }
+
+    .name{
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+    .controllers{
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+</style>
+
+<a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{% url 'admin_panel' %}"> Powrót </a>
+
 <div style="margin-top: 20px;">
 <div>
     <a href="{% url 'player_create' %}" class="btn btn-success"> Dodaj piłkarza </a>
@@ -8,16 +31,22 @@
 <div>
     <p></p>
 </div>
-<div>
     {% for player in players %}
-    <div>
 
+    <div class="player-container">
 
-        <p> <a href="{% url 'player_delete' player.id %}" class="btn btn-danger" >Usuń </a> <a href="{% url 'player_edit' player.id %}" class="btn btn-primary">Edytuj </a> {{player.name }}  {{player.surname}}</p>
+        <div class="name">
+            <h5><span style="color: white;">{{player.name }} {{player.surname}}</span></h5>
+        </div>
+
+        <div class="controllers">
+            <a href="{% url 'player_delete' player.id %}" class="btn btn-danger" >Usuń </a> <a href="{% url 'player_edit' player.id %}" class="btn btn-primary">Edytuj </a>
+        </div>
 
     </div>
+
+
     {% endfor %}
-</div>
-</div>
+<div>
 
 {% endblock content %}

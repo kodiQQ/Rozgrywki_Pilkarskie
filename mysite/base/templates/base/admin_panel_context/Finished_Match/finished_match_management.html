@@ -2,20 +2,48 @@
 
 {% block content %}
 
-<div style="margin-top: 20px;">
-    <a href="{% url 'match_create' %}" class="btn btn-success"> Dodaj mecz </a>
-</div>
+<style>
+    .f_match-container{
+        background-color: #353535;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+
+    .name{
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+    .controllers{
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+</style>
+
+<a style="margin-top: 20px;" class="btn btn-info" href="{% url 'admin_panel' %}"> Powrót </a>
+
 <div>
     <p></p>
 </div>
+
 <div>
     {% for match in matches %}
-    <div>
 
-        <p> <a href="{% url 'match_delete' match.id %}" class="btn btn-danger">Usuń </a> <a href="{% url 'match_edit' match.id %}" class="btn btn-primary">Edytuj </a> <a href="{% url 'match_event_management' match.id %}" class="btn btn-success">Zarządzaj zdarzniami meczowymi </a> <a href="{% url 'squad_management' match.id %}" class="btn btn-success"> Zarządzaj składem </a> <a href="{% url 'cancel_finish_match' match.id %}" class="btn btn-success"> Anuluj zakończenie meczu </a> {{match.team1 }} vs {{match.team2}}</p>
+    <div class="f_match-container">
+
+        <div class="name">
+            <h5><span style="color: white;">{{match.team1 }} vs {{match.team2}}</span></h5>
+        </div>
+
+        <div class="controllers">
+            <a href="{% url 'match_delete' match.id %}" class="btn btn-danger">Usuń </a> <a href="{% url 'match_edit' match.id %}" class="btn btn-primary">Edytuj </a> <a href="{% url 'match_event_management' match.id %}" class="btn btn-success">Zarządzaj zdarzniami meczowymi </a> <a href="{% url 'squad_management' match.id %}" class="btn btn-success"> Zarządzaj składem </a> <a href="{% url 'cancel_finish_match' match.id %}" class="btn btn-success"> Anuluj zakończenie meczu </a>
+        </div>
 
     </div>
+
     {% endfor %}
+
 </div>
 <div>
 

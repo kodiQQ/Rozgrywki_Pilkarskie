@@ -4,11 +4,20 @@
 
 <style>
     .home-container{
-    display: grid;
-    grid-template-columns: 2fr 1fr 3fr 1.5fr;
+        display: grid;
+        grid-template-columns: 2fr 1fr 3fr 1.5fr;
     }
 
-}
+    .league{
+        margin-left: 5px;
+    }
+
+    .options{
+        text-decoration: none;
+        padding: 5px;
+        font-size: 13px;
+        color: #9FFFFC;
+    }
 
 
 </style>
@@ -18,12 +27,12 @@
 <div class="home-container">
 
     <div>
-        <h3>Szukaj rozgrywek</h3>
+        <h3><span style="color: white;">Szukaj rozgrywek</span></h3>
         <hr>
         <table class="table table-bordered table-dark">
         <tr>
             <td>
-                <a href="{% url 'home'%}">Wszystkie mecze</a>
+                <a href="{% url 'home'%}" style="text-decoration: none; color: white; margin-left: 5px;">Wszystkie mecze</a>
             </td>
         </tr>
 
@@ -31,10 +40,13 @@
 
         <tr>
             <td>
-                <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="transition: color 0.3s ease;">{{ league }}</a>
-                <a href="{% url 'statistics' league.id %}"> Statystyki drużyn </a>
-                <a href="{% url 'player_statistics' league.id %}"> Statystyki piłkarzy </a>
-                <p><a href="{% url 'queues' league.id %}">Kolejki</a></p>
+                <div class="league">
+                <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="text-decoration: none;">{{ league }}</a>
+                </div>
+
+                <a class="options" href="{% url 'statistics' league.id %}"> Statystyki drużyn </a>
+                <a class="options" href="{% url 'player_statistics' league.id %}"> Statystyki piłkarzy</a>
+                <a class="options" href="{% url 'queues' league.id %}">Kolejki</a>
             </td>
         </tr>
 
@@ -62,7 +74,9 @@
 
             <tr>
                 <td>
-                    <a href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
+                    <div class="match">
+                        <a style="text-decoration: none; color: #ABF362;" href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a style="text-decoration: none; color: #ABF362;" href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
+                    </div>
                 </td>
             </tr>
 

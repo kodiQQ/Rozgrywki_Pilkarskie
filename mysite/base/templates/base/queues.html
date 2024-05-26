@@ -1,15 +1,14 @@
 {% extends 'main.html' %}
 
-{% block title %}
-    Lista Meczów
-{% endblock title %}
 
 {% block content %}
-<h1>Lista Meczów dla {{ league.name }}</h1>
+<a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{{request.META.HTTP_REFERER}}"> Powrót </a>
+
+<h1>Lista Meczów - {{ league.name }}</h1>
 <div class="queue-container">
     {% for matches in matches_list %}
 
-    <p>Kolejka {{ forloop.counter }} </p>
+    <h5>Kolejka {{ forloop.counter }} </h5>
     {% for m in matches %}
     <p> {{ m.team1.name }} vs {{ m.team2.name }}</p>
     {% endfor %}

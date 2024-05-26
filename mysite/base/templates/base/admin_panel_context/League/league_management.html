@@ -1,6 +1,29 @@
 {% extends 'main.html' %}
 
+
+
 {% block content %}
+<style>
+    .league-container{
+        background-color: #353535;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+
+    .name{
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+    .controllers{
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+</style>
+
+<a style="margin-top: 20px;" class="btn btn-info" href="{% url 'admin_panel' %}"> Powrót </a>
+
 
 <div style="margin-top: 20px;">
     <a href="{% url 'league_create' %}" class="btn btn-success"> Dodaj ligę </a>
@@ -10,11 +33,14 @@
 </div>
 <div>
     {% for league in leagues %}
-    <div>
-
-        <p> <a href="{% url 'league_delete' league.id %}" class="btn btn-danger">Usuń </a> <a href="{% url 'league_edit' league.id %}" class="btn btn-primary">Edytuj </a> {{league.name}}</p>
-
+<div class="league-container">
+    <div class="name">
+        <h5><span style="color: white;">{{league.name}}</span></h5>
     </div>
+    <div class="controllers">
+        <a href="{% url 'league_delete' league.id %}" class="btn btn-danger">Usuń </a> <a href="{% url 'league_edit' league.id %}" class="btn btn-primary">Edytuj </a>
+    </div>
+</div>
     {% endfor %}
 </div>
 
