@@ -7,17 +7,12 @@
 {% block content %}
 <h1>Lista Meczów dla {{ league.name }}</h1>
 <div class="queue-container">
-    {% for queue in queues %}
-        <h2>{{ queue }}</h2>
-        <ul>
-            {% for match in queue.matches.all %}
-                <li>{{ match.team1.name }} vs {{ match.team2.name }}</li>
-            {% empty %}
-                <li>Brak meczów w tej kolejce.</li>
-            {% endfor %}
-        </ul>
-    {% empty %}
-        <p>Brak kolejek w tej lidze.</p>
+    {% for matches in matches_list %}
+
+    <p>Kolejka {{ forloop.counter }} </p>
+    {% for m in matches %}
+    <p> {{ m.team1.name }} vs {{ m.team2.name }}</p>
+    {% endfor %}
     {% endfor %}
 </div>
 {% endblock content %}

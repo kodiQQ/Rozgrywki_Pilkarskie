@@ -234,11 +234,11 @@ def match_edit(request,pk):
 
 @login_required(login_url='/login')
 def match_delete(request,pk):
-    match=Match.objects.get(id=pk)
+    obj=Match.objects.get(id=pk)
     if request.method == 'POST':
-        match.delete()
+        obj.delete()
         return redirect('match_management')
-    context={'obj':match}
+    context={'obj':obj}
     return render(request, 'base/admin_panel_context/Match/match_delete.html',context)
 
 #LEAGUE
@@ -283,48 +283,28 @@ def league_delete(request,pk):
 
 
 
-# def queues(request, league_id):
-#     league = League.objects.get(pk=league_id)
-#     queues = Queue.objects.filter(league=league)
-#     matches = Match.objects.filter(queue_number__league=league)  # używaj poprawnego klucza do filtrowania
-#
-#     print("Liczba meczów:", matches.count())  # debugowanie
-#
-#     context = {
-#         'league': league,
-#         'queues': queues,
-#         'matches': matches
-#     }
-#     return render(request, 'base/queues.html', context)
 
-#------------DZIAŁA ALE NIE FILTRUJE PO LIGACH----------
-# def queues(request):
-#     # league = League.objects.get(pk=league_id)
-#     # queues = Queue.objects.filter(league=league)
-#     queues = Queue.objects.all()
-#
-#     context = {'queues': queues}
-#     return render(request, 'base/queues.html', context)
 
-def get_queues(request):
-    league_id = request.GET.get('league_id')
-    queues = Queue.objects.filter(league_id=league_id).values('id', 'number')
-    return JsonResponse({'queues': list(queues)})
 def queues(request, league_id):
     league = get_object_or_404(League, pk=league_id)
-    queues = Queue.objects.filter(league=league)
+    #queues = Queue.objects.filter(league=league)
+    match=Match.objects.filter(league=league)
+    max_queue_number=0
+    for m in match:
+        if max_queue_number < m.queue_number:
+            max_queue_number=m.queue_number
+            
+    matches_list=[]
+    for i in range(max_queue_number):
+        try:
+            matches_queue=Match.objects.filter(league=league,queue_number=(i+1))
+            matches_list.append(matches_queue)
+        except:
+            matches_list.append("Brak Meczy")
+        
 
-    # Debugging prints
-    print(f"League: {league.name}")
-    print(f"Queues count: {queues.count()}")
-    for queue in queues:
-        print(f"Queue: {queue.number}")
-        matches = queue.matches.all()
-        print(f"Matches in Queue {queue.number}: {matches.count()}")
-        for match in matches:
-            print(f"Match: {match.team1.name} vs {match.team2.name}")
 
-    context = {'league': league, 'queues': queues}
+    context = {'league': league, 'matches_list': matches_list}
     return render(request, 'base/queues.html', context)
 
 

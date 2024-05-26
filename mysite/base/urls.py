@@ -47,7 +47,6 @@ urlpatterns = [
 
     path('admin_panel/match_management/',views.match_management,name="match_management"),
     path('admin_panel/finished_match_management/',views.finished_match_management,name="finished_match_management"),
-    path('api/get-queues/', views.get_queues, name='get_queues'),
     #path('admin_panel/team_management/add_team',views.team_management,name="team_add"),
 
 

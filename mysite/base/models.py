@@ -37,11 +37,11 @@ class Match(models.Model):
     referee = models.CharField(max_length=50)
     stadium = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
-    queue_number = models.ForeignKey(Queue, related_name='matches', on_delete=models.CASCADE)
+    queue_number = models.IntegerField()
     finished = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.team1.name} vs {self.team2.name} - Kolejka {self.queue_number.number if self.queue_number else 'Brak kolejki'}"
+        return f"{self.team1.name} vs {self.team2.name} - Kolejka {self.queue_number if self.queue_number else 'Brak kolejki'}"
     def clean(self):
         # Sprawdzamy, czy team1 i team2 są takie same
         if self.team1 == self.team2:
