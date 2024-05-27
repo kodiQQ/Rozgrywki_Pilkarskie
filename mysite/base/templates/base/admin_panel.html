@@ -11,6 +11,9 @@
         background-color: #353535;
         border-radius: 10px;
         margin-top: 20px;
+        border-style: solid;
+        border-width: 2px;
+        box-shadow: 3px 3px 7px
     }
 
     a{
@@ -20,10 +23,14 @@
 
 </style>
 
-<a style="margin-top: 20px; margin-left: 10px;" class="btn btn-info" href="{% url 'home' %}"> Powrót </a>
+<a style="margin-top: 20px; margin-left: 10px;border-style: solid;border-width: 2px;box-shadow: 3px 3px 7px" class="btn btn-info" href="{% url 'home' %}"> Powrót </a>
 
 
 <div class="admin container" style="margin-top: 20px;">
+
+    <div class="option">
+    <a href="{% url 'player_management' %}"> <h5>Zarządzanie piłkarzami</h5> </a>
+    </div>
 
     <div class="option">
         <a href="{% url 'team_management' %}"> <h5>Zarządzanie drużynami</h5> </a>
@@ -34,7 +41,7 @@
     </div>
 
     <div class="option">
-            <a href="{% url 'finished_match_management' %}"> <h5>Zarządzanie meczami zakończonymi<h5> </h5></a>
+            <a href="{% url 'finished_match_management' %}"> <h5>Zarządzanie meczami zakończonymi </h5></a>
     </div>
 
     <div class="option">
