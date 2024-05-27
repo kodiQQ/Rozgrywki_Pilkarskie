@@ -1,6 +1,10 @@
 {% load static %}
 
-<div style="margin-top: 10px;">
+<div id="logo" style="float: left; padding: 10px; margin-left: -10px; margin-top: 10px;">
+    <a href="/"><img src="{% static 'images/logo.png' %}" alt="logo" width="110" height="110" /></a>
+</div>
+
+<div style="margin-top: 35px; float: right;">
 <form method="GET" action="{% url 'home' %}">
     <input type="text" name="q" placeholder="Szukaj meczy..." />
 </form>
@@ -8,20 +12,21 @@
 
 {% if request.user.is_authenticated %}
 
-<a style="margin-top: 10px;" href=" {% url 'logout' %} " class="btn btn-danger">Wyloguj się</a>
-
-
-
-<a style="margin-top: 10px;" href="{% url 'admin_panel' %}" class="btn btn-warning">Panel administratora</a>
+<div class="options" style="float: right; margin-top: 5px;">
+    <a style="margin-top: 10px;" href=" {% url 'logout' %} " class="btn btn-danger">Wyloguj się</a>
+    <a style="margin-top: 10px;" href="{% url 'admin_panel' %}" class="btn btn-warning">Panel administratora</a>
+</div>
 
 {% else %}
 
 
-<a style="margin-top: 10px;" href="{% url 'login' %}" class="btn btn-primary">Zaloguj się</a>
+<a style="margin-top: 10px; float: right;" href="{% url 'login' %}" class="btn btn-primary">Zaloguj się</a>
 
 
 {% endif %}
 
-<hr>
 
+
+<hr>
 </div>
+<div style="clear: both;"></div>
