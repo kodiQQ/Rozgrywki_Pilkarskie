@@ -19,12 +19,23 @@
         color: #00C9FF;
     }
 
-    .table-custom {
-        background-color: #000000;
+    .table-custom>tbody>tr>td,
+    .table-custom>tbody>tr>th {
+        background-color: #22004D;
         color: white;
     }
 
-
+    .table.table-bordered.table-custom,
+    .table.table-bordered.table-custom>tbody>tr>td,
+    .table.table-bordered.table-custom>tbody>tr>th,
+    .table.table-bordered.table-custom>thead>tr>td,
+    .table.table-bordered.table-custom>thead>tr>th,
+    .table.table-bordered.table-custom>tfoot>tr>td,
+    .table.table-bordered.table-custom>tfoot>tr>th {
+        border-color: #000B29 !important;
+        border-width: 3px !important;
+        border-radius: 10px;
+}
 
 </style>
 
@@ -34,7 +45,7 @@
 
     <div>
         <hr>
-        <table class="table table-bordered table-dark">
+        <table class="table table-bordered table-custom">
         <tr>
             <td>
                 <a href="{% url 'home'%}" style="text-decoration: none; color: white; margin-left: 5px;">Wszystkie mecze</a>
@@ -63,10 +74,10 @@
     </div>
     <div>
 
-        <table class="table table-bordered table-dark" style="margin-top: 35px;">
+        <table class="table table-bordered table-custom" style="margin-top: 35px;">
             <tr>
                 <td>
-                    <h5>{{match_count}} nadchodzących meczy</h5>
+                    <h5><span color="white">{{match_count}} nadchodzących meczy</span></h5>
                 </td>
             </tr>
 
