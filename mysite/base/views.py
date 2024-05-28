@@ -123,7 +123,7 @@ def team_create(request):
     context={'form': form}
     #bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!
     if request.method =='POST':
-        form=TeamForm(request.POST)
+        form=TeamForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
     return render(request, 'base/admin_panel_context/Team/team_form.html',context)
@@ -260,7 +260,7 @@ def league_create(request):
     context={'form': form}
     #bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!
     if request.method =='POST':
-        form=LeagueForm(request.POST)
+        form=LeagueForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
     return render(request, 'base/admin_panel_context/League/league_form.html',context)
