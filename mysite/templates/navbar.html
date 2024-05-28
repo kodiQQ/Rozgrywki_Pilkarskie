@@ -1,32 +1,46 @@
 {% load static %}
 
-<div id="logo" style="float: left; padding: 10px; margin-left: -10px; margin-top: 10px;">
-    <a href="/"><img src="{% static 'images/logo.png' %}" alt="logo" width="110" height="110" /></a>
-</div>
+<style>
+    /* Styl dla paska nawigacyjnego, aby był przyklejony do góry strony */
+    .navbar-fixed {
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background-color: #00113E;
+        border-bottom: 3px solid #22004D;
+    }
+    .navbar-fixed hr {
+        display: none; /* Ukryj <hr> w przyklejonym pasku nawigacyjnym */
+    }
 
-<div style="margin-top: 35px; float: right;">
-<form method="GET" action="{% url 'home' %}">
-    <input type="text" name="q" placeholder="Szukaj meczy..." />
-</form>
+    /* Dodaj margines górnego dla zawartości strony */
+    .page-content {
+        margin-top: 70px; /* Dostosuj wysokość marginesu do wysokości Twojego paska nawigacyjnego */
+    }
+</style>
 
+<div class="navbar-fixed">
+    <div id="logo" style="float: left; padding: 10px; margin-left: 10px; margin-top: 10px;">
+        <a href="/"><img src="{% static 'images/logo.png' %}" alt="logo" width="110" height="110" /></a>
+    </div>
 
-{% if request.user.is_authenticated %}
+    <div style="margin-top: 35px; float: right;">
+        <form method="GET" action="{% url 'home' %}">
+            <input type="text" name="q" placeholder="Szukaj meczy..." />
+        </form>
 
-<div class="options" style="float: right; margin-top: 5px;">
-    <a style="margin-top: 10px;" href=" {% url 'logout' %} " class="btn btn-danger">Wyloguj się</a>
-    <a style="margin-top: 10px;" href="{% url 'admin_panel' %}" class="btn btn-warning">Panel administratora</a>
-</div>
+        {% if request.user.is_authenticated %}
+        <div class="options" style="float: right; margin-top: 5px;">
+            <a style="margin-top: 10px; margin-right: 5px;" href="{% url 'logout' %}" class="btn btn-danger">Wyloguj się</a>
+            <a style="margin-top: 10px; margin-right: 5px;" href="{% url 'admin_panel' %}" class="btn btn-warning">Panel administratora</a>
+        </div>
+        {% else %}
+        <a style="margin-top: 10px; float: right; margin-right: 5px;" href="{% url 'login' %}" class="btn btn-primary">Zaloguj się</a>
+        {% endif %}
 
-{% else %}
-
-
-<a style="margin-top: 10px; float: right;" href="{% url 'login' %}" class="btn btn-primary">Zaloguj się</a>
-
-
-{% endif %}
-
-
-
-<hr>
+        <hr>
+    </div>
+    <div style="clear: both;"></div>
 </div>
 <div style="clear: both;"></div>
