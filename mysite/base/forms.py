@@ -1,10 +1,16 @@
 from django.forms import ModelForm
-from .models import Team, Player, Match, League,Match_Goal,Match_Penalty,Squad,Statistics
-
-class TeamForm(ModelForm):
+from .models import Team, Player, Match, League,Match_Goal,Match_Penalty,Squad,Statistics,Queue
+from django import forms
+from .models import Player
+class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields= '__all__'
+        widgets = {
+            'league': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'city': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 '''
 class PlayerForm(ModelForm):
     class Meta:
@@ -13,14 +19,14 @@ class PlayerForm(ModelForm):
         exclude = ['goals']
         '''
 
-from django import forms
-from .models import Player
+
 
 class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
         fields = '__all__'
         exclude = ['goals']
+
         widgets = {
             'team': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -37,6 +43,16 @@ class MatchForm(ModelForm):
         model = Match
         fields= '__all__'
         exclude = ['finished']
+        widgets = {
+            'team1': forms.Select(attrs={'class': 'form-control'}),
+            'team2': forms.Select(attrs={'class': 'form-control'}),
+            'referee': forms.TextInput(attrs={'class': 'form-control'}),
+            'stadium': forms.TextInput(attrs={'class': 'form-control'}),
+            'league': forms.Select(attrs={'class': 'form-control'}),
+            'queue_number': forms.NumberInput(attrs={'class': 'form-control'}),
+
+        }
+
 
         def __init__(self, *args, **kwargs):
             super(MatchForm, self).__init__(*args, **kwargs)
@@ -63,10 +79,14 @@ class FinishedMatchForm(ModelForm):
         fields= '__all__'
         '''
 
-class LeagueForm(ModelForm):
+class LeagueForm(forms.ModelForm):
     class Meta:
         model = League
-        fields= '__all__'
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'country': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 class MatchGoalForm(ModelForm):
