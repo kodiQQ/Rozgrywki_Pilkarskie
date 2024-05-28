@@ -1,3 +1,5 @@
+
+
 {% extends 'main.html' %}
 
 {% block content %}
@@ -13,6 +15,10 @@
         <div class="form-group">
             <label for="{{ form.country.id_for_label }}" class="form-label">{{ form.country.label }}</label>
             {{ form.country }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.league_logo.id_for_label }}" class="form-label">{{ form.league_logo.label }}</label>
+             <p>{{ form.league_logo }}</p>
         </div>
         <input type="submit" value="Zatwierdź" class="btn btn-success" />
     </form>

@@ -10,6 +10,7 @@ class TeamForm(forms.ModelForm):
             'league': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'city': forms.TextInput(attrs={'class': 'form-control'}),
+            'team_logo': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
         }
 '''
 class PlayerForm(ModelForm):
@@ -35,6 +36,7 @@ class PlayerForm(forms.ModelForm):
             'age': forms.NumberInput(attrs={'class': 'form-control'}),
             'nationality': forms.TextInput(attrs={'class': 'form-control'}),
             'number': forms.NumberInput(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
         }
 
 
@@ -86,6 +88,7 @@ class LeagueForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'country': forms.TextInput(attrs={'class': 'form-control'}),
+            'league_logo': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
         }
 
 
