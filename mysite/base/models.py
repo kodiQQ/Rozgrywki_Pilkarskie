@@ -114,7 +114,8 @@ class Player(models.Model):
     nationality = models.TextField(max_length=20)
     number = models.IntegerField()
     goals = models.IntegerField(default=0)
-    #position = models.TextField(max_length=20)
+    image=models.ImageField(null=True, blank=True, upload_to="images/")
+
 
     def __str__(self):
         return str(self.name+" "+ self.surname)

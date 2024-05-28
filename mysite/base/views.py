@@ -155,8 +155,8 @@ def player_create(request):
 
     form = PlayerForm()
 
-    for field in form:
-        field.label_tag = field.label_tag(attrs={'class': 'form-label'})
+    #for field in form:
+        #field.label_tag = field.label_tag(attrs={'class': 'form-label'})
 
     context={'form': form}
     #bez tego ifa to co wpiszemy i zatwierdzimy na stronie nie będzie zapisane w bazie danych!

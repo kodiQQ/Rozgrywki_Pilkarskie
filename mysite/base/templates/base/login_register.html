@@ -8,11 +8,11 @@
     <form method="POST" action="">
         {% csrf_token %}
 
-        <label>Nazwa użytkownika: </label>
-        <input type="text" name="username" placeholder="Wpisz nazwę" />
+        <label class="form-label">Nazwa użytkownika: </label>
+        <input class="form-control" type="text" name="username" placeholder="Wpisz nazwę" />
 
-        <label>Hasło: </label>
-        <input type="password" name="password" placeholder="Wpisz hasło"  />
+        <label class="form-label" >Hasło: </label>
+        <input class="form-control" type="password" name="password" placeholder="Wpisz hasło"  />
 
         <input type="submit" class="btn btn-primary" value="Zaloguj się" />
     </form>

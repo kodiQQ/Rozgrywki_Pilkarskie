@@ -7,7 +7,22 @@
 <div>
     <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
+            <div class="form-group">
+        <label for="{{ form.league.id_for_label }}" class="form-label">{{ form.league.label }}</label>
+        {{ form.league }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+        {{ form.name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.city.id_for_label }}" class="form-label">{{ form.city.label }}</label>
+        {{ form.city }}
+    </div>
+        <div class="form-group">
+            <label for="{{ form.team_logo.id_for_label }}" class="form-label">{{ form.team_logo.label }}</label>
+            {{ form.team_logo }}
+        </div>
         <input type="submit" value="Zatwierdź" class="btn btn-success" />
     </form>
 </div>
