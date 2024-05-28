@@ -25,6 +25,7 @@
         margin: 0; /* Usunięcie domyślnych marginesów paragrafów */
         padding: 5px 0; /* Dodanie odstępu na górze i na dole paragrafów */
     }
+
 </style>
 
 {% extends 'main.html' %}
@@ -36,9 +37,10 @@
     <a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{{request.META.HTTP_REFERER}}"> Powrót </a>
 
     <div>
-        <h1> Tabela Wyników</h1>
+        <h1 style="color: white;">Tabela Wyników</h1>
+
     </div>
-    <table class="table table-bordered table-warning">
+    <table class="table table-bordered table-custom">
         <tr>
             <td>
                 <h2>Drużyna</h2>

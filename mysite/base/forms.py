@@ -5,12 +5,32 @@ class TeamForm(ModelForm):
     class Meta:
         model = Team
         fields= '__all__'
-
+'''
 class PlayerForm(ModelForm):
     class Meta:
         model = Player
         fields= '__all__'
         exclude = ['goals']
+        '''
+
+from django import forms
+from .models import Player
+
+class PlayerForm(forms.ModelForm):
+    class Meta:
+        model = Player
+        fields = '__all__'
+        exclude = ['goals']
+        widgets = {
+            'team': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'position': forms.Select(attrs={'class': 'form-control'}),
+            'surname': forms.TextInput(attrs={'class': 'form-control'}),
+            'age': forms.NumberInput(attrs={'class': 'form-control'}),
+            'nationality': forms.TextInput(attrs={'class': 'form-control'}),
+            'number': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
 
 class MatchForm(ModelForm):
     class Meta:
