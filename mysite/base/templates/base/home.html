@@ -80,7 +80,10 @@
             <tr>
                 <td>
                     <div class="match">
+                        <img src="{{ match.team1.team_logo.url }}" width="30" height="30"/>
                         <a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
+                        <img src="{{ match.team2.team_logo.url }}" width="30" height="30"/>
+
                     </div>
                 </td>
             </tr>

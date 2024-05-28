@@ -26,6 +26,19 @@
         padding: 5px 0; /* Dodanie odstępu na górze i na dole paragrafów */
     }
 
+    td {
+        text-align: center; /* Wyśrodkuj tekst wewnątrz td */
+    }
+
+    .center-img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .center-text {
+        text-align: center; /* Opcjonalne, wyśrodkuje tekst poniżej obrazu */
+    }
+
 </style>
 
 {% extends 'main.html' %}
@@ -74,31 +87,32 @@
         <tr>
 
             <td>
-                <p> {{stat.team}}</p>
+            <img src="{{ statistics.team.team_logo.url }}" width="60" height="60" class="center-img" />
+            <p class="center-text">{{ stat.team }}</p>
             </td>
 
             <td>
-                <p>{{stat.wins}} </p>
+                <h5>{{stat.wins}} </h5>
             </td>
 
             <td>
-                <p>{{stat.draws}} </p>
+                <h5>{{stat.draws}} </h5>
             </td>
 
             <td>
-                <p>{{stat.loses}} </p>
+                <h5>{{stat.loses}} </h5>
             </td>
 
             <td>
-                <p>{{stat.goals}} </p>
+                <h5>{{stat.goals}} </h5>
             </td>
 
             <td>
-                <p>{{stat.goals_lost}} </p>
+                <h5>{{stat.goals_lost}} </h5>
             </td>
 
             <td>
-                <p>{{stat.points}} </p>
+                <h5>{{stat.points}} </h5>
             </td>
 
         </tr>

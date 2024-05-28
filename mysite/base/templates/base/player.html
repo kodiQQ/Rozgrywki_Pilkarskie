@@ -2,11 +2,37 @@
 
 {% block content %}
 
-<a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{{request.META.HTTP_REFERER}}"> Powrót </a>
+<style>
+    .player-img{
+        float:left;
+        margin-top: 25px;
+        margin-bottom: 30px;
+    }
 
-<h1>{{player.name}} {{player.surname}}</h1>
+    .player-name{
+        float:left;
+        margin-top: 45px;
+        margin-left: 10px;
+    }
+
+</style>
+
 <div>
-    <table class="table table-bordered table-dark">
+<a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{{request.META.HTTP_REFERER}}"> Powrót </a>
+<div>
+
+<div class="player-img">
+    <img src="{{ player.image.url }}" width="100" height="100" />
+</div>
+
+<div class="player-name">
+    <h1>{{player.name}} {{player.surname}}</h1>
+</div>
+
+<div style="clear: both;"></div>
+
+<div>
+    <table class="table table-bordered table-custom">
         <tr>
             <td>
                 Drużyna:
