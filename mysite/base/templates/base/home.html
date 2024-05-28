@@ -35,17 +35,27 @@
         </tr>
 
         {% for league in leagues %}
-        <tr>
-            <td>
-                <div class="league">
-                    <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="text-decoration: none;">{{ league }}</a>
-                </div>
-                <a class="options" href="{% url 'statistics' league.id %}"> Statystyki drużyn </a>
-                <a class="options" href="{% url 'player_statistics' league.id %}"> Statystyki piłkarzy</a>
-                <a class="options" href="{% url 'queues' league.id %}">Kolejki</a>
-            </td>
-        </tr>
-        {% endfor %}
+<tr>
+    <td>
+        <div style="overflow: hidden;">
+            {% if league.league_logo %}
+            <img src="{{ league.league_logo.url }}" width="30" height="30" style="float: left; margin-right: 10px;">
+            {% endif %}
+
+            <div class="league" style="float: left;">
+                <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="text-decoration: none;">{{ league }}</a>
+            </div>
+        </div>
+
+        <a class="options" href="{% url 'statistics' league.id %}"> Statystyki drużyn </a>
+        <a class="options" href="{% url 'player_statistics' league.id %}"> Statystyki piłkarzy</a>
+        <a class="options" href="{% url 'queues' league.id %}">Kolejki</a>
+        <div style="clear: both;"></div>
+
+    </td>
+</tr>
+{% endfor %}
+
     </table>
 
 

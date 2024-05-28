@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError
 class League(models.Model):
     name = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
+    league_logo = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def __str__(self):
         return self.name
@@ -20,6 +21,7 @@ class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
     name=models.CharField(max_length=50)
     city=models.CharField(max_length=50)
+    team_logo = models.ImageField(null=True, blank=True, upload_to="images/")
     def __str__(self):
         return self.name
 
