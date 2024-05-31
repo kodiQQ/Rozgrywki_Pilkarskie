@@ -16,7 +16,14 @@
         text-decoration: none;
         padding: 5px;
         font-size: 13px;
-        color: #00C9FF;
+        color: #E1E1E1;
+    }
+
+    .match {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
     }
 
 </style>
@@ -39,7 +46,7 @@
     <td>
         <div style="overflow: hidden;">
             {% if league.league_logo %}
-            <img src="{{ league.league_logo.url }}" width="30" height="30" style="float: left; margin-right: 10px;">
+            <img src="{{ league.league_logo.url }}" width="30" height="30" style="float: left; margin-right: 10px; margin-left: 7px;">
             {% endif %}
 
             <div class="league" style="float: left;">
@@ -81,9 +88,9 @@
                 <td>
                     <div class="match">
                         <img src="{{ match.team1.team_logo.url }}" width="30" height="30"/>
-                        <a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
+                        <a href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a  href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
                         <img src="{{ match.team2.team_logo.url }}" width="30" height="30"/>
-
+                        <p style="margin-top: 15px">- Kolejka {{match.queue_number}}</p>
                     </div>
                 </td>
             </tr>

@@ -2,15 +2,56 @@
 
 
 {% block content %}
-<a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{{request.META.HTTP_REFERER}}"> Powrót </a>
 
-<h1>Lista Meczów - {{ league.name }}</h1>
+<style>
+    p{
+        color: white;
+    }
+
+    h5{
+        color: white;
+    }
+
+</style>
+
+<div>
+    <a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{% url 'home' %}"> Powrót </a>
+</div>
+
+
+    <div style="float: left; margin-top: 20px;">
+        <h1>Lista Meczów - {{ league.name }}</h1>
+    </div>
+    <div style="float: left; margin-top: 3px; margin-left: 15px;">
+        <img src="{{ league.league_logo.url }}" width="80" height="80" />
+    </div>
+
+
+<div style="clear: both;"></div>
+
 <div class="queue-container">
     {% for matches in matches_list %}
 
-    <h5>Kolejka {{ forloop.counter }} </h5>
+    <table class="table table-bordered table-custom" style="margin-top: 35px;">
+            <tr>
+                <td>
+                    <h5>Kolejka {{ forloop.counter }} </h5>
+                </td>
+            </tr>
+
+
     {% for m in matches %}
-    <p> {{ m.team1.name }} vs {{ m.team2.name }}</p>
+
+         <tr>
+                <td>
+                    <div class="match">
+                            <a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' m.team1.id %}">{{m.team1 }}</a><span style="color: white;"> vs </span><a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' m.team2.id %}">{{m.team2}}</a>
+                    </div>
+                </td>
+            </tr>
+
+
+
     {% endfor %}
     {% endfor %}
 </div>
