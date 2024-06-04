@@ -45,7 +45,10 @@
          <tr>
                 <td>
                     <div class="match">
-                            <a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' m.team1.id %}">{{m.team1 }}</a><span style="color: white;"> vs </span><a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' m.team2.id %}">{{m.team2}}</a>
+                        <img src="{{ m.team1.team_logo.url }}" width="30" height="30" style="margin-bottom: 3px; "/>
+                        <a href="{% url 'team' m.team1.id %}">{{m.team1 }}</a> vs <a  href="{% url 'team' m.team2.id %}">{{m.team2}}</a>
+                        <img src="{{ m.team2.team_logo.url }}" width="30" height="30" style="margin-bottom: 3px;"/>
+<!--                     <a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' m.team1.id %}">{{m.team1 }}</a><span style="color: white;"> vs </span><a style="text-decoration: none; color: #00C9FF;" href="{% url 'team' m.team2.id %}">{{m.team2}}</a>-->
                     </div>
                 </td>
             </tr>

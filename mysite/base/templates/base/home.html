@@ -19,12 +19,13 @@
         color: #E1E1E1;
     }
 
+
     .match {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        height: 40px;
-    }
+    display: flex;
+    flex-direction: column; /* Ustawia kierunek kolumnowy */
+    align-items: center;
+}
+
 
 </style>
 
@@ -87,10 +88,12 @@
             <tr>
                 <td>
                     <div class="match">
-                        <img src="{{ match.team1.team_logo.url }}" width="30" height="30"/>
-                        <a href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a  href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
-                        <img src="{{ match.team2.team_logo.url }}" width="30" height="30"/>
-                        <p style="margin-top: 15px">- Kolejka {{match.queue_number}}</p>
+
+                        <div class="teams">
+                            <img src="{{ match.team1.team_logo.url }}" width="30" height="30"/>
+                            <a href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
+                            <img src="{{ match.team2.team_logo.url }}" width="30" height="30"/>
+                        </div>
                     </div>
                 </td>
             </tr>
