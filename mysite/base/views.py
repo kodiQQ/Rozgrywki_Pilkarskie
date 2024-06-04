@@ -598,6 +598,16 @@ def player_statistics(request,pk):
     context={'players':players}
     return render(request, 'base/player_statistics.html',context)
 
+def match_list(request):
+    matches = Match.objects.all()
+    context = {'matches': matches}
+    return render(request, 'base/match_list.html', context)
+
+def match_detail(request, match_id):
+    match = get_object_or_404(Match, id=match_id)
+    context = {'match': match}
+    return render(request, 'base/match.html', context)
+
 def matches_played(request):
 
     q = request.GET.get('q') if request.GET.get('q') != None else ''

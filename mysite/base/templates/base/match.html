@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+
+    .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px; /* opcjonalnie, aby dodać trochę miejsca wokół */
+    }
+
+    .header .image {
+        margin: 0 20px; /* dodaje odstęp między obrazami a tekstem */
+    }
+
+    .header2 h1 {
+        margin: 0; /* usuwa domyślne marginesy */
+    }
+
+    .information{
+
+    }
+
+    h3{
+        color: white;
+        letter-spacing: 1px;
+    }
+
+</style>
+
+<a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{{request.META.HTTP_REFERER}}"> Powrót </a>
+
+<div class="header">
+    <div class="image">
+        <img src="{{ match.team1.team_logo.url }}" width="80" height="80" />
+    </div>
+    <div class="header2">
+        <h1>{{match.team1}} vs {{match.team2}}</h1>
+    </div>
+    <div class="image">
+        <img src="{{ match.team2.team_logo.url }}" width="80" height="80" />
+    </div>
+</div>
+
+<table class="table table-bordered table-custom">
+        <tr>
+            <td>
+                <h3 style="margin-bottom: 15px;">Sędzia: {{match.referee}}</h3>
+                <h3>Stadion: {{match.stadium}}</h3>
+            </td>
+        </tr>
+</table>
+{% endblock content %}

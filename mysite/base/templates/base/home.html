@@ -20,10 +20,35 @@
     }
 
 
+
     .match {
     display: flex;
-    flex-direction: column; /* Ustawia kierunek kolumnowy */
     align-items: center;
+    /*justify-content: center;*/
+    position: relative;
+}
+
+.match .link {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    text-decoration: none;
+}
+
+.match img {
+    margin: 0 10px;
+}
+
+.match .team-link {
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.vs {
+    margin: 0 10px;
 }
 
 
@@ -86,13 +111,14 @@
             <tr>
                 <td>
                     <div class="match">
-
-                        <div class="teams">
-                            <img src="{{ match.team1.team_logo.url }}" width="30" height="30"/>
-                            <a href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
-                            <img src="{{ match.team2.team_logo.url }}" width="30" height="30"/>
-                        </div>
+                        <a class="link" href="{% url 'match-detail' match.id %}"></a>
+                        <img src="{{ match.team1.team_logo.url }}" width="30" height="30" style="margin-left: 40px;" />
+                        <a style="z-index: 2;" href="{% url 'team' match.team1.id %}" class="team-link">{{ match.team1 }}</a>
+                        <span class="vs">vs</span>
+                        <a style="z-index: 2;" href="{% url 'team' match.team2.id %}" class="team-link">{{ match.team2 }}</a>
+                        <img src="{{ match.team2.team_logo.url }}" width="30" height="30" style="margin-right: 10px;" />
                     </div>
+
                 </td>
             </tr>
 
