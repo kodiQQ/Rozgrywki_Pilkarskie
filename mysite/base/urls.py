@@ -9,6 +9,7 @@ urlpatterns = [
     path('teams/', views.teams, name="teams"),
     path('queues/', views.queues, name="queues"),
     path('queues/<int:league_id>/', views.queues, name='queues'),
+    path('matches_played/', views.matches_played, name='matches_played'),
     #path('matchdays<int:league_id>/', views.matchdays, name='matchdays'),
     #path('queues/<int:league_id>/', views.queues, name='queues'),
     #path('queues/<int:league_id>/', views.queues, name='queues'),

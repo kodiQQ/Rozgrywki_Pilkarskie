@@ -29,7 +29,7 @@
 </style>
 
 {% include 'navbar.html' %}
-<h1>Nadchodzące mecze</h1>
+<h1>Rozegrane mecze</h1>
 <div class="home-container">
 
     <div>
@@ -44,7 +44,7 @@
             {% endif %}
 
             <div class="league" style="float: left;">
-                <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="text-decoration: none;">{{ league }}</a>
+                <a href="{% url 'matches_played' %}?q={{league.name}}" class="text-white" style="text-decoration: none;">{{ league }}</a>
             </div>
         </div>
 
@@ -74,7 +74,7 @@
             <tr>
                 <td>
                     <h5><span color="white">{{league}}</span></h5>
-                    <h5><span color="white">{{match_count}} nadchodzących meczy</span></h5>
+                    <h5><span color="white">{{match_count}} rozegranych meczy</span></h5>
                 </td>
             </tr>
 
