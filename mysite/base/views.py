@@ -50,9 +50,12 @@ def home(request):
         Q(team1__name__icontains=q) |
         Q(team2__name__icontains=q))&Q(finished=False)
     )
+    if q == "":
+        q="FALSE"
     leagues = League.objects.all()
     match_count = matches.count()
-    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count}
+    #league=matches[0].league
+    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count,'league':q}
     return render(request,'base/home.html',context)
 
 def statistics(request,pk):
