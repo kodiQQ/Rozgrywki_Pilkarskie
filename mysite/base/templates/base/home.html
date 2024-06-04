@@ -35,12 +35,6 @@
     <div>
         <hr>
         <table class="table table-bordered table-custom">
-        <tr>
-            <td>
-                <a href="{% url 'home'%}" style="text-decoration: none; color: white; margin-left: 5px;">Wszystkie Ligi</a>
-            </td>
-        </tr>
-
         {% for league in leagues %}
 <tr>
     <td>
@@ -71,11 +65,15 @@
     <div>
 
     </div>
+    {% if league == "FALSE" %}
+
+    {% else %}
     <div>
 
         <table class="table table-bordered table-custom" style="margin-top: 35px;">
             <tr>
                 <td>
+                    <h5><span color="white">{{league}}</span></h5>
                     <h5><span color="white">{{match_count}} nadchodzących meczy</span></h5>
                 </td>
             </tr>
@@ -101,6 +99,7 @@
 
 
     </div>
+    {% endif %}
 
     <div>
 
