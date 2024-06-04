@@ -37,7 +37,7 @@
         <tr>
 
             <td>
-                <p> {{p.name}} {{p.surname}}</p>
+                <a href="{% url 'player' p.id %}" style="text-decoration: none; color: #00C9FF;">{{p.name}} {{p.surname}}</a>
             </td>
 
             <td>

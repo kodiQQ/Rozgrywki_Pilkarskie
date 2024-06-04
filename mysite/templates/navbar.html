@@ -8,8 +8,9 @@
         left: 0;
         z-index: 1000;
         background-color: #00113E;
-        border-bottom: 3px solid #22004D;
+        border-bottom: 3px solid #BB9845;
     }
+
     .navbar-fixed hr {
         display: none; /* Ukryj <hr> w przyklejonym pasku nawigacyjnym */
     }
@@ -18,35 +19,64 @@
     .page-content {
         margin-top: 70px; /* Dostosuj wysokość marginesu do wysokości Twojego paska nawigacyjnego */
     }
+
     form .form-label {
     color: white; /* Kolor napisów */
     font-weight: bold;
+    }
 
-        .form-control {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-}
-}
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+    }
+
+
+
+
+
+    .search-input {
+        background-color: #7097FF;
+        width: 200px;
+        padding: 10px;
+        border: 3px solid #001E6D;
+        border-radius: 7px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: #8EADFF;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .search-input::placeholder {
+        color: #001E6D;
+    }
+
+
 </style>
 
 <div class="navbar-fixed">
     <div id="logo" style="float: left; padding: 10px; margin-left: 10px; margin-top: 10px;">
-        <a href="/"><img src="{% static 'images/logo.png' %}" alt="logo" width="110" height="110" /></a>
+        <a href="/"><img src="{% static 'images/logo.png' %}" alt="logo" width="140" height="130" /></a>
     </div>
 
     <div style="margin-top: 35px; float: right;">
-        <form method="GET" action="{% url 'home' %}">
-            <input type="text" name="q" placeholder="Szukaj meczy..." />
-        </form>
+
+        <div class="search-container">
+            <form method="GET" action="{% url 'home' %}">
+                <input type="text" name="q" placeholder="Szukaj meczy..." class="search-input" />
+            </form>
+        </div>
 
         {% if request.user.is_authenticated %}
         <div class="options" style="float: right; margin-top: 5px;">
-            <a style="margin-top: 10px; margin-right: 5px;" href="{% url 'logout' %}" class="btn btn-danger">Wyloguj się</a>
             <a style="margin-top: 10px; margin-right: 5px;" href="{% url 'admin_panel' %}" class="btn btn-warning">Panel administratora</a>
+            <a style="margin-top: 10px; margin-right: 5px;" href="{% url 'logout' %}" class="btn btn-danger">Wyloguj się</a>
         </div>
         {% else %}
         <a style="margin-top: 10px; float: right; margin-right: 5px;" href="{% url 'login' %}" class="btn btn-primary">Zaloguj się</a>

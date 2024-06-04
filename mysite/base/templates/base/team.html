@@ -1,8 +1,18 @@
 {% extends 'main.html' %}
 
 {% block content %}
+<div>
 <a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{{request.META.HTTP_REFERER}}"> Powrót </a>
-<h1>{{statistics.team.name}}</h1>
+</div>
+    <div class="team_name" style="float: left; margin-top: 20px;">
+        <h1>{{statistics.team.name}}</h1>
+    </div>
+    <div class="team_img" style="float: left; margin-top: 3px; margin-left: 15px;">
+        <img src="{{ statistics.team.team_logo.url }}" width="80" height="80" />
+    </div>
+    <div style="clear: both;">
+    </div>
+
 <p></p>
 <h1>Statystyki:</h1>
 <div>
