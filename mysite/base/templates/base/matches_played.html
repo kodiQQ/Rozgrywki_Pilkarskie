@@ -19,18 +19,17 @@
         color: #E1E1E1;
     }
 
-
     .match {
-    display: flex;
-    flex-direction: column; /* Ustawia kierunek kolumnowy */
-    align-items: center;
-}
-
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
+    }
 
 </style>
 
 {% include 'navbar.html' %}
-<h1>Nadchodzące mecze</h1>
+<h1>Rozegrane mecze</h1>
 <div class="home-container">
 
     <div>
@@ -45,7 +44,7 @@
             {% endif %}
 
             <div class="league" style="float: left;">
-                <a href="{% url 'home' %}?q={{league.name}}" class="text-white" style="text-decoration: none;">{{ league }}</a>
+                <a href="{% url 'matches_played' %}?q={{league.name}}" class="text-white" style="text-decoration: none;">{{ league }}</a>
             </div>
         </div>
 
@@ -75,7 +74,7 @@
             <tr>
                 <td>
                     <h5><span color="white">{{league}}</span></h5>
-                    <h5><span color="white">{{match_count}} nadchodzących meczy</span></h5>
+                    <h5><span color="white">{{match_count}} rozegranych meczy</span></h5>
                 </td>
             </tr>
 
@@ -86,12 +85,10 @@
             <tr>
                 <td>
                     <div class="match">
-
-                        <div class="teams">
-                            <img src="{{ match.team1.team_logo.url }}" width="30" height="30"/>
-                            <a href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
-                            <img src="{{ match.team2.team_logo.url }}" width="30" height="30"/>
-                        </div>
+                        <img src="{{ match.team1.team_logo.url }}" width="30" height="30"/>
+                        <a href="{% url 'team' match.team1.id %}">{{match.team1 }}</a> vs <a  href="{% url 'team' match.team2.id %}">{{match.team2}}</a>
+                        <img src="{{ match.team2.team_logo.url }}" width="30" height="30"/>
+                        <p style="margin-top: 15px">- Kolejka {{match.queue_number}}</p>
                     </div>
                 </td>
             </tr>

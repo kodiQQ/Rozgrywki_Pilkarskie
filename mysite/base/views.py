@@ -597,3 +597,20 @@ def player_statistics(request,pk):
 
     context={'players':players}
     return render(request, 'base/player_statistics.html',context)
+
+def matches_played(request):
+
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    matches = Match.objects.filter(
+        (Q(league__name__icontains=q) |
+        Q(team1__name__icontains=q) |
+        Q(team2__name__icontains=q))&Q(finished=True)
+    )
+
+    if q == "":
+        q="FALSE"
+    leagues = League.objects.all()
+    match_count = matches.count()
+    #league=matches[0].league
+    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count,'league':q}
+    return render(request,'base/matches_played.html',context)
