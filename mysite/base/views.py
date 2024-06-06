@@ -605,7 +605,22 @@ def match_list(request):
 
 def match_detail(request, match_id):
     match = get_object_or_404(Match, id=match_id)
-    context = {'match': match}
+
+    team1_goals=0
+    team2_goals=0
+    try:
+        team1_goals = Match_Goal.objects.filter(match=match, team=match.team1)
+        team1_goals = len(team1_goals)
+    except:
+        1
+
+    try:
+        team2_goals = Match_Goal.objects.filter(match=match, team=match.team2)
+        team2_goals = len(team2_goals)
+    except:
+        1
+
+    context = {'match': match,'team1_goals':team1_goals,'team2_goals':team2_goals}
     return render(request, 'base/match.html', context)
 
 def matches_played(request):

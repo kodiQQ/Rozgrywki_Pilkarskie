@@ -28,12 +28,20 @@
         color: white;
         letter-spacing: 1px;
     }
+    .score {
+    font-size: 45px;
+    color: white;
+
+    }
 
 </style>
 
 <a style="margin-top: 20px; margin-bottom: 10px;" class="btn btn-info" href="{{request.META.HTTP_REFERER}}"> Powrót </a>
 
 <div class="header">
+    <div class="score">
+        {{team1_goals}}
+    </div>
     <div class="image">
         <img src="{{ match.team1.team_logo.url }}" width="80" height="80" />
     </div>
@@ -42,6 +50,9 @@
     </div>
     <div class="image">
         <img src="{{ match.team2.team_logo.url }}" width="80" height="80" />
+    </div>
+    <div class="score">
+        {{team2_goals}}
     </div>
 </div>
 
