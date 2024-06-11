@@ -21,10 +21,10 @@
 
 
 
-    .match {
+ .match {
     display: flex;
     align-items: center;
-    /*justify-content: center;*/
+    justify-content: center; /* Wyśrodkowanie elementów */
     position: relative;
 }
 
@@ -48,6 +48,10 @@
 }
 
 .vs {
+    margin: 0 10px;
+}
+
+.match h5 {
     margin: 0 10px;
 }
 
@@ -112,15 +116,14 @@
                 <td>
                     <div class="match">
                         <a class="link" href="{% url 'match-detail' m.match.id %}"></a>
-                        <img src="{{ match.team1.team_logo.url }}" width="30" height="30" style="margin-left: 40px;" />
-                        <h1 style="z-index: 2;">{{ m.team1_score }}</h1>
-                        <a style="z-index: 2;" href="{% url 'team' m.match.team1.id %}" class="team-link">{{ m.match.team1 }}</a>
+                        <img src="{{ m.match.team1.team_logo.url }}" width="30" height="30" />
+                        <h5>{{ m.team1_score }}</h5>
+                        <a href="{% url 'team' m.match.team1.id %}" class="team-link" style="font-size: 15px;">{{ m.match.team1 }}</a>
                         <span class="vs">vs</span>
-                        <a style="z-index: 2;" href="{% url 'team' m.match.team2.id %}" class="team-link">{{ m.match.team2 }}</a>
-                        <h1 style="z-index: 2;">{{ m.team2_score }}</h1>
-                        <img src="{{ match.team2.team_logo.url }}" width="30" height="30" style="margin-right: 10px;" />
+                        <a href="{% url 'team' m.match.team2.id %}" class="team-link" style="font-size: 15px;">{{ m.match.team2 }}</a>
+                        <h5>{{ m.team2_score }}</h5>
+                        <img src="{{ m.match.team2.team_logo.url }}" width="30" height="30" />
                     </div>
-
                 </td>
             </tr>
 
