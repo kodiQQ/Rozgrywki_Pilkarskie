@@ -14,6 +14,14 @@ class League(models.Model):
     country = models.CharField(max_length=50)
     league_logo = models.ImageField(null=True, blank=True, upload_to="images/")
 
+    def save(self, *args, **kwargs):
+        if not self.league_logo:  # Sprawdzenie, czy nie podano logo
+            # Tutaj można ustawić ścieżkę do domyślnego logo
+            default_logo_path = 'media/images/default_logo.png'
+            self.league_logo = default_logo_path
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -22,6 +30,14 @@ class Team(models.Model):
     name=models.CharField(max_length=50)
     city=models.CharField(max_length=50)
     team_logo = models.ImageField(null=True, blank=True, upload_to="images/")
+
+    def save(self, *args, **kwargs):
+        if not self.team_logo:  # Sprawdzenie, czy nie podano logo
+            # Tutaj można ustawić ścieżkę do domyślnego logo
+            default_logo_path = 'media/images/default_logo.png'
+            self.team_logo = default_logo_path
+
+        super().save(*args, **kwargs)
     def __str__(self):
         return self.name
 
@@ -116,6 +132,13 @@ class Player(models.Model):
     goals = models.IntegerField(default=0)
     image=models.ImageField(null=True, blank=True, upload_to="images/")
 
+    def save(self, *args, **kwargs):
+        if not self.image:  # Sprawdzenie, czy nie podano logo
+            # Tutaj można ustawić ścieżkę do domyślnego logo
+            default_logo_path = 'media/images/default_logo.png'
+            self.image = default_logo_path
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.name+" "+ self.surname)
@@ -196,5 +219,11 @@ class Match_Goal(models.Model):
 
     def __str__(self):
         return f"Goal by {self.player} at {self.time} minute(s)"
+
+
+class Match_and_Score(models.Model):
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, default=1)
+    team1_score=models.IntegerField(default=0)
+    team2_score = models.IntegerField(default=0)
 
 

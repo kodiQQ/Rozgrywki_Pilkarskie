@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team, Player, Statistics, Match, League, Match_Penalty, Match_Goal, Squad, Queue
+from .models import Team, Player, Statistics, Match, League, Match_Penalty, Match_Goal, Squad, Queue,Match_and_Score
 from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm,SquadForm,StatisticsForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 from django.shortcuts import render, get_object_or_404, redirect
@@ -42,6 +42,7 @@ def logoutUser(request):
     return redirect('home')
 
 
+
 def home(request):
 
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -50,12 +51,45 @@ def home(request):
         Q(team1__name__icontains=q) |
         Q(team2__name__icontains=q))&Q(finished=False)
     )
+
+
+
+
+    for match in matches:
+        team1_goals = 0
+        team2_goals = 0
+        match_list=[]
+        try:
+            team1_goals = Match_Goal.objects.filter(match=match, team=match.team1)
+            team1_goals = len(team1_goals)
+
+
+        except:
+            1
+
+        try:
+            team2_goals = Match_Goal.objects.filter(match=match, team=match.team2)
+            team2_goals = len(team2_goals)
+        except:
+            1
+
+        #aby nie tworzyć kolejnego obiektu gdy już taki istinieje
+
+        match_and_score0 = Match_and_Score.objects.filter(match=match).first()
+        if not match_and_score0:
+            match_and_score0 = Match_and_Score.objects.create(match=match, team1_score=team1_goals,team2_score=team2_goals)
+            match_and_score0.save()
+
+    matches_and_score=Match_and_Score.objects.filter(match__in=matches)
+
+
     if q == "":
         q="FALSE"
     leagues = League.objects.all()
     match_count = matches.count()
-    #league=matches[0].league
-    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count,'league':q}
+
+
+    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count,'league':q,'matches_and_score':matches_and_score}
     return render(request,'base/home.html',context)
 
 def statistics(request,pk):
@@ -632,10 +666,45 @@ def matches_played(request):
         Q(team2__name__icontains=q))&Q(finished=True)
     )
 
+    for match in matches:
+        team1_goals = 0
+        team2_goals = 0
+        match_list = []
+        try:
+            team1_goals = Match_Goal.objects.filter(match=match, team=match.team1)
+            team1_goals = len(team1_goals)
+
+
+        except:
+            1
+
+        try:
+            team2_goals = Match_Goal.objects.filter(match=match, team=match.team2)
+            team2_goals = len(team2_goals)
+        except:
+            1
+
+        # aby nie tworzyć kolejnego obiektu gdy już taki istinieje
+
+        match_and_score0 = Match_and_Score.objects.filter(match=match).first()
+        if not match_and_score0:
+            match_and_score0 = Match_and_Score.objects.create(match=match, team1_score=team1_goals,
+                                                              team2_score=team2_goals)
+            match_and_score0.save()
+
+        match_to_edit=Match_and_Score.objects.get(match=match)
+        match_to_edit.team1_score=team1_goals
+        match_to_edit.team2_score=team2_goals
+        match_to_edit.save()
+
+    matches_and_score = Match_and_Score.objects.filter(match__in=matches)
+    print(len(matches_and_score))
+
     if q == "":
-        q="FALSE"
+        q = "FALSE"
     leagues = League.objects.all()
     match_count = matches.count()
-    #league=matches[0].league
-    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count,'league':q}
+
+    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count, 'league': q,
+               'matches_and_score': matches_and_score}
     return render(request,'base/matches_played.html',context)
