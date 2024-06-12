@@ -91,7 +91,7 @@
 
             <td>
             <img src="{{ stat.team.team_logo.url }}" width="60" height="60" class="center-img" alt="team-logo" />
-            <p class="center-text">{{ stat.team }}</p>
+            <a href="{% url 'team' stat.team.id %}" class="center-text">{{ stat.team }}</a>
             </td>
 
             <td>
