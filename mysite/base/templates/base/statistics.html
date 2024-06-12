@@ -82,6 +82,9 @@
             <td>
                 <h2>Punkty</h2>
             </td>
+            <td>
+                <h2>Rozergane mecze</h2>
+            </td>
         </tr>
         {% for stat in statistics %}
         <tr>
@@ -113,6 +116,10 @@
 
             <td>
                 <h5>{{stat.points}} </h5>
+            </td>
+
+            <td>
+                <h5>{{stat.matches_played}} </h5>
             </td>
 
         </tr>

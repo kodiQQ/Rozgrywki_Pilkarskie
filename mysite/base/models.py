@@ -95,12 +95,17 @@ class Statistics(models.Model):
     loses = models.IntegerField(default=0)  # Typo corrected: 'loses' to 'losses'
     goals = models.IntegerField(default=0)
     goals_lost = models.IntegerField(default=0)
+    matches_played=models.IntegerField(default=0)
     def __str__(self):
         return f"{self.team.name} Statistics"  # Provides a human-readable string representation
     @property
     def points(self):
         """Calculates the points based on wins and draws."""
         return self.wins * 3 + self.draws
+
+
+
+
 
 
 '''
