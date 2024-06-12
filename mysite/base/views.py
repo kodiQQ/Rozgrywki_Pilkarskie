@@ -98,41 +98,22 @@ def statistics(request,pk):
     teams=Team.objects.filter(league_id=league_id1)
     statistics0 = Statistics.objects.filter(team__in=teams)
 
+    for stat in statistics0:
+        stat.matches_played = stat.wins + stat.draws + stat.loses
+        stat.save()
+
     #sortuje względem punktów
     statistics = statistics0.annotate(
         total_points=ExpressionWrapper(F('wins') * 3 + F('draws'), output_field=IntegerField())
     ).order_by('-total_points')
 
-    '''
-    league_obj = League.objects.get(pk=pk)
-    league_id = league_obj.id
-    teams_all=Season_table
-    print(league_obj)
-    teams = Season_table.objects.filter(league=league_obj).values_list('team', flat=True)
-    for t in teams:
-        print("druzyna: "+str(t))
+    #for stat in statistics:
+        #stat.matches_played = stat.wins + stat.draws + stat.losses
 
+    # statistics = statistics.annotate(
+    #     matches_played=ExpressionWrapper(F('wins') + F('draws')+ F('loses'), output_field=IntegerField())
+    # )
 
-    statistics_all=Statistics.objects.all()
-    for s in statistics_all:
-        print("statistics_all:")
-        print(s)
-        print(s.team.id)
-    statistics0 = Statistics.objects.filter(team__in=teams)
-
-    print("statistics0")
-    print(statistics0)
-    statistics = statistics0.annotate(
-        total_points=ExpressionWrapper(F('wins') * 3 + F('draws'), output_field=IntegerField())
-    ).order_by('-total_points')
-    '''
-    '''
-    statistics = Statistics.objects.annotate(
-        total_points=ExpressionWrapper(F('wins') * 3 + F('draws'), output_field=IntegerField())
-    ).order_by('-total_points')
-    '''
-
-    #context={'team':statistics.team, 'wins':statistics.team, 'draws':statistics.draws,'loses':statistics.loses, 'goals':statistics.goals,'goals_lost':statistics.goals_lost, 'points':statistics.points}
     context={'statistics':statistics}
     return render(request, 'base/statistics.html',context)
 
