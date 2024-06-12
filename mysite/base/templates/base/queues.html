@@ -39,7 +39,7 @@
                 </td>
             </tr>
 
-
+    {% if check_queue == "true" %}
     {% for m in matches %}
 
          <tr>
@@ -55,6 +55,7 @@
 
 
     {% endfor %}
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock content %}

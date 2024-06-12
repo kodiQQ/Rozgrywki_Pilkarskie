@@ -331,11 +331,16 @@ def queues(request, league_id):
     league = get_object_or_404(League, pk=league_id)
     #queues = Queue.objects.filter(league=league)
     match=Match.objects.filter(league=league)
+    if len(match)!=0:
+        check_match="true"
     max_queue_number=0
     for m in match:
         if max_queue_number < m.queue_number:
             max_queue_number=m.queue_number
-            
+
+    check_queue = "false"
+    if max_queue_number>0:
+        check_queue="true"
     matches_list=[]
     for i in range(max_queue_number):
         try:
@@ -346,7 +351,7 @@ def queues(request, league_id):
         
 
 
-    context = {'league': league, 'matches_list': matches_list}
+    context = {'league': league, 'matches_list': matches_list,'check_queue':check_queue}
     return render(request, 'base/queues.html', context)
 
 
