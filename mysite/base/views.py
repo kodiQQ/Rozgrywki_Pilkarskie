@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Team, Player, Statistics, Match, League, Match_Penalty, Match_Goal, Squad, Queue,Match_and_Score
+from .models import Team, Player, Statistics, Match, League, Match_Penalty, Match_Goal, Squad, Queue,Match_and_Score, Logo
 from .forms import TeamForm, PlayerForm, MatchForm, LeagueForm, MatchPenaltyForm,MatchGoalForm,SquadForm,StatisticsForm
 from django.db.models import IntegerField, ExpressionWrapper, F
 from django.shortcuts import render, get_object_or_404, redirect
@@ -44,6 +44,8 @@ def logoutUser(request):
 
 
 def home(request):
+
+    logo = Logo.objects.first()
 
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     matches = Match.objects.filter(
@@ -89,7 +91,7 @@ def home(request):
     match_count = matches.count()
 
 
-    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count,'league':q,'matches_and_score':matches_and_score}
+    context = {'matches': matches, 'leagues': leagues, 'match_count': match_count,'league':q,'matches_and_score':matches_and_score, 'logo': logo}
     return render(request,'base/home.html',context)
 
 def statistics(request,pk):

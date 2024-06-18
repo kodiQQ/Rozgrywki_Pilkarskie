@@ -1,5 +1,6 @@
 {% load static %}
 
+{% block content %}
 <style>
     /* Styl dla paska nawigacyjnego, aby był przyklejony do góry strony */
     .navbar-fixed {
@@ -65,7 +66,8 @@
 
 <div class="navbar-fixed">
     <div id="logo" style="float: left; padding: 10px; margin-left: 10px; margin-top: 10px;">
-        <a href="/"><img src="{% static 'images/logo.png' %}" alt="logo" width="140" height="130" /></a>
+        <a href="/"><img src="{{ logo.logo_image.url }}" alt="logo" width="140" height="130" /></a>
+
     </div>
 
     <div>
@@ -100,3 +102,5 @@
 <!--    <div style="clear: both;"></div>-->
 </div>
 <div style="clear: both;"></div>
+
+{% endblock content %}

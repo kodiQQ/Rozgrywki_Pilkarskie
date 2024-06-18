@@ -231,4 +231,8 @@ class Match_and_Score(models.Model):
     team1_score=models.IntegerField(default=0)
     team2_score = models.IntegerField(default=0)
 
+class Logo(models.Model):
+    logo_image=models.ImageField(null=True, blank=True, upload_to="images/")
+
+
 
