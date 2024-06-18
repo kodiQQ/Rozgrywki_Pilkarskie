@@ -647,6 +647,7 @@ def match_detail(request, match_id):
 
 def matches_played(request):
 
+    logo = Logo.objects.first()
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     matches = Match.objects.filter(
         (Q(league__name__icontains=q) |
@@ -694,5 +695,5 @@ def matches_played(request):
     match_count = matches.count()
 
     context = {'matches': matches, 'leagues': leagues, 'match_count': match_count, 'league': q,
-               'matches_and_score': matches_and_score}
+               'matches_and_score': matches_and_score, 'logo': logo}
     return render(request,'base/matches_played.html',context)
